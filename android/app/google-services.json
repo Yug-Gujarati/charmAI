@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "529244970093",
+    "project_id": "charmai-55e2b",
+    "storage_bucket": "charmai-55e2b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:529244970093:android:175b01d12ed10a077b3364",
+        "android_client_info": {
+          "package_name": "com.appnexatech.charmai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3GyK-1_1v8n5GDfuI-q1OLg7lR8-GA3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

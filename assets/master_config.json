@@ -1,0 +1,173 @@
+{
+  "version": 2,
+ "categories": [
+
+   {
+     "id": "dating",
+     "title": "Dating Photos",
+     "type": "faceswap",
+
+     "templates": [
+       {
+         "image": "categories/dating/dating_1.webp"
+       },
+       {
+         "image": "categories/dating/dating_2.webp"
+       },
+       {
+         "image": "categories/dating/dating_3.webp"
+       },
+       {
+         "image": "categories/dating/dating_4.webp"
+       },
+       {
+         "image": "categories/dating/dating_5.webp"
+       }
+
+     ]
+   },
+
+
+   {
+     "id": "couple",
+     "title": "Photoshoot",
+     "type": "prompt",
+     "templates": [
+       {
+         "image": "categories/couple/photoshoot/couple_1.webp",
+         "prompt": "A professional studio portrait. A couple, full-front facing, looking directly into the camera with clear expressions and sharp details on their faces. They are standing close, the man with his arm around the woman. They are dressed in sleek, matching black turtlenecks. Minimalist aesthetic. Minimalist concrete backdrop, moody studio lighting, deep shadows, 8k resolution, shot on 85mm lens."
+       },
+       {
+         "image": "categories/couple/photoshoot/couple_2.webp",
+         "prompt": "A professional studio portrait. A couple against a clean, warm beige textured wall. The focus is sharp and clear, full-front facing the camera with clear expressions on their faces. They are standing close, the man’s hands resting gently on the woman’s waist, she is smiling clearly at the camera. Soft, diffused butterfly lighting, airy atmosphere, vogue style, cinematic textures."
+       },
+       {
+         "image": "categories/couple/photoshoot/couple_3.webp",
+         "prompt": "Ultra-realistic luxury studio couple portrait. A man wearing a tailored black suit and white shirt sits confidently on an elegant luxury chair. A beautiful woman wearing a fitted black evening dress and heels stands beside him with one hand resting on his shoulder. Both are looking directly into the camera with confident expressions. Premium dark studio background, soft spotlight lighting, Vogue magazine style, luxury fashion editorial, ultra-photorealistic, sharp focus, realistic skin texture, professional studio photography."
+       },
+       {
+         "image": "categories/couple/photoshoot/couple_4.webp",
+         "prompt": "Ultra-realistic luxury couple photography inside a private jet. A man wearing a fitted black suit sits confidently by the window while his beautiful girlfriend wearing an elegant white mini dress sits beside him with her arm linked through his. Both look directly into the camera with confident smiles. Private jet interior, luxury leather seats, golden ambient lighting, millionaire lifestyle aesthetic, ultra-photorealistic, cinematic lighting, luxury travel photography, sharp focus."
+       },
+       {
+         "image": "categories/couple/photoshoot/couple_5.webp",
+         "prompt": "Ultra-realistic luxury studio couple portrait, indistinguishable from a real professional photograph. A handsome  man wearing a perfectly tailored black suit and crisp white shirt sits confidently on an elegant luxury chair. A beautiful  woman wearing a fitted black evening dress and high heels stands beside him with one hand resting naturally on his shoulder. Both are looking directly into the camera with confident, sophisticated expressions. Premium dark studio background with subtle luxury textures, cinematic spotlight lighting, realistic shadows, natural skin pores, detailed eyes, individual hair strands, realistic fabric textures, true-to-life facial features, Vogue magazine cover style, studio HDR lighting, hyper-realistic details."
+       },
+       {
+         "image": "categories/couple/photoshoot/couple_6.webp",
+         "prompt": "Ultra-realistic luxury studio couple portrait, indistinguishable from a real professional photograph. A handsome  man wearing a tailored black suit and white shirt sits confidently on an elegant luxury chair. A beautiful  woman in her early 20s wearing a fitted black evening dress sits sideways on his lap, one arm resting gently around his shoulder. Both are looking directly into the camera with confident expressions. Premium dark studio background with subtle luxury textures, cinematic spotlight lighting, realistic skin pores, detailed eyes, individual hair strands, realistic fabric textures, true-to-life facial features, luxury fashion editorial, Vogue magazine style."
+       },
+       {
+         "image": "categories/couple/photoshoot/couple_7.webp",
+         "prompt": "Ultra-realistic luxury studio couple portrait. A handsome man wearing a tailored black suit and white shirt sits confidently on an elegant luxury chair. A beautiful  woman wearing a fitted black evening dress and heels stands beside him with one hand resting on his shoulder. Both are looking directly into the camera with confident expressions. Premium dark studio background, soft spotlight lighting, Vogue magazine style, luxury fashion editorial, ultra-photorealistic, sharp focus, realistic skin texture."
+       },
+       {
+         "image": "categories/couple/photoshoot/couple_8.webp",
+         "prompt": "Ultra-realistic luxury studio couple portrait. A beautiful woman an elegant champagne satin dress stands confidently in front of a handsome man wearing a fitted dark navy suit with a black turtleneck. The man stands directly behind her with one arm wrapped around her waist in a protective embrace. Both are looking directly into the camera with confident, sophisticated expressions. Premium beige and gold luxury studio background with modern architectural panels, soft cinematic lighting, subtle floor reflections, luxury fashion campaign aesthetic, Vogue magazine editorial style, realistic skin pores, detailed eyes, natural hair strands, ultra-photorealistic, hyper-realistic fashion photography."
+       },
+       {
+         "image": "categories/couple/photoshoot/couple_9.webp",
+         "prompt": "Ultra-realistic luxury studio couple portrait. A handsome  man wearing a fitted black blazer, black t-shirt, and tailored trousers sits on a modern studio cube. A beautiful  woman wearing a stylish white bodycon dress stands between his legs, one hand resting on his shoulder while the man gently holds her waist. Both are looking directly into the camera with confident celebrity-like expressions. Dark grey textured luxury studio background, dramatic spotlight lighting, luxury fashion editorial, Vogue magazine cover style, realistic skin pores, detailed eyes, natural hair strands, ultra-photorealistic, hyper-realistic DSLR photography, 85mm lens, razor-sharp focus, masterpiece quality, luxury campaign aesthetic."
+       },
+       {
+         "image": "categories/couple/photoshoot/couple_10.webp",
+         "prompt": "Ultra-realistic luxury studio couple portrait. A handsome  man wearing a fitted cream turtleneck sweater, light grey trousers, and a luxury watch sits casually on a modern marble block. A beautiful  woman wearing a stylish beige blazer dress and nude high heels stands beside him with one hand resting gently on his shoulder. Both are looking directly into the camera with confident, sophisticated expressions. Modern architectural studio background featuring curved beige walls, textured stone panels, and soft ambient lighting. Warm luxury atmosphere, subtle shadows, premium fashion campaign aesthetic, realistic skin pores, detailed eyes, natural hair strands, ultra-photorealistic, luxury editorial style, high-end magazine cover."
+       }
+     ]
+   },
+
+    {
+      "id": "couple",
+      "title": "Vacation",
+      "type": "prompt",
+      "templates": [
+        {
+          "image": "categories/couple/vacation/couple_1.webp",
+          "prompt": "Ultra-realistic beach couple photography at golden sunset. A handsome man wearing a fitted black t-shirt and beige shorts gently lifts his beautiful girlfriend wearing a white crop top and light blue denim shorts. She wraps her arms around his shoulders, one leg bent playfully in the air. Both are looking directly at the camera with genuine smiles. Shallow ocean water splashing around their feet, glowing sunset reflections, soft waves, wind-blown hair, cinematic lighting, realistic skin texture, sharp focus on both faces, luxury beach vacation aesthetic."
+        },
+        {
+          "image": "categories/couple/vacation/couple_2.webp",
+          "prompt": "Ultra-realistic beach couple photography at golden sunset. A handsome man wearing a fitted black t-shirt and beige shorts stands directly behind his beautiful girlfriend wearing a white crop top and denim shorts. Her back is pressed against his chest as he wraps both arms around her waist from behind and gently spins her in a playful back-hug embrace. The girl's feet lift slightly from the sand as she leans back into him. Both are laughing and looking directly into the camera, with the boy's face visible over her shoulder. Warm sunset glow, ocean reflections, shallow waves, wind-blown hair, natural couple chemistry, cinematic lighting, realistic skin texture, sharp focus on both faces, authentic vacation photo, full-body shot."
+        },
+        {
+          "image": "categories/couple/vacation/couple_3.webp",
+          "prompt": "Ultra-realistic beach travel photography at golden sunset. A beautiful woman wearing a beige crop top and white beach shorts walks barefoot along the shoreline toward the camera. 3-4 steps behind her, a handsome man wearing a fitted black t-shirt and khaki shorts carries her sandals while walking toward the camera. Both are looking directly at the camera with natural smiles, faces perfectly visible and equally sharp. Golden sunlight reflecting on the ocean, gentle waves, wind-blown hair, authentic couple chemistry, realistic skin pores, detailed hair strands, cinematic lighting, deep depth of field, no blurred faces, indistinguishable from a real vacation photo, full-body shot"
+        },
+        {
+          "image": "categories/couple/vacation/couple_4.webp",
+          "prompt": "A candid ultra-realistic beach photograph of [Reference Couple] walking hand-in-hand along a peaceful sandy shoreline during golden sunset.The woman walks slightly ahead while the man follows closely beside her holding her hand, creating a natural romantic vacation moment. Both are turned toward the camera with genuine smiles, their faces clearly visible. They wear elegant white linen beach outfits that move naturally in the ocean breeze. Warm golden sunlight reflects across the water, gentle waves touch the shore, and soft wind flows through their hair. Natural body language, authentic couple chemistry, realistic skin texture, cinematic composition, shallow depth of field, premium travel photography, ultra-high resolution, luxury vacation aesthetic"
+        },
+        {
+          "image": "categories/couple/vacation/couple_5.webp",
+          "prompt": "A candid ultra-realistic beach photograph of [Reference Couple] close-up shot during \"Golden Hour\" on a beach. The warm, soft sunlight is hitting their faces from the side/front, creating a gentle glow. Both faces are looking at the camera with exceptionally clear and sharp expressions. They are in a gentle embrace, smiling. Shallow depth of field, warm color palette."
+        },
+        {
+          "image": "categories/couple/vacation/couple_6.webp",
+          "prompt": "A candid ultra-realistic travel photograph of [Reference Couple] standing in front of a warm orange and purple sunset sky on a beach. Their faces are facing the camera directly, well-lit by soft fill-light to ensure full, sharp clarity and visibility. The man is holding the woman around the waist, she has her arms on his shoulders. Ultra-high resolution, dreamy atmosphere, soft focus background."
+        },
+        {
+          "image": "categories/couple/vacation/couple_7.webp",
+          "prompt": "A candid ultra-realistic beach photograph of [Reference Couple] beach photography during golden hour. A young man wearing a fitted white linen shirt with rolled sleeves and beige shorts is running through shallow ocean water while holding hands with his girlfriend. A beautiful woman wears a stylish short white beach dress above the knees, lightweight and flowing in the sea breeze. Both are running toward the camera, holding hands, looking directly into the lens with bright genuine smiles and joyful expressions. Water splashes around their feet as they move naturally through the shoreline. Close medium-full body shot, couple occupies most of the frame, clear view of faces and body posture. Soft ocean waves, dreamy sunset sky, warm golden sunlight reflecting on the water."
+        },
+        {
+          "image": "categories/couple/vacation/couple_8.webp",
+          "prompt": "A candid ultra-realistic beach photograph of [Reference Couple] is standing in the sand, very close to each other, looking directly at the camera with clear, well-lit expressions. Their faces are in sharp focus and clearly visible. They are holding hands, smiling. Bright, natural noon sunlight (high-noon sun), minimal waves in the distant background, blue sky, high detail."
+        },
+        {
+          "image": "categories/couple/vacation/couple_9.webp",
+          "prompt": "A candid ultra-realistic beach photograph of [Reference Couple] photography at golden sunset. A handsome man stands behind his girlfriend, hugging her waist from the back and spinning her playfully. Her feet are off the ground, legs bent naturally, hair flowing in the breeze. Both are laughing and looking directly at the camera. Golden ocean reflections, gentle waves, authentic couple chemistry, realistic motion, cinematic lighting, detailed skin texture, sharp focus on both faces, luxury vacation aesthetic."
+        },
+        {
+          "image": "categories/couple/vacation/couple_10.webp",
+          "prompt": "A candid ultra-realistic beach photograph of [Reference Couple] during golden hour, with the man giving a playful piggyback ride to his girlfriend while running through shallow ocean water. The girl wraps her arms around his shoulders as both laugh joyfully and look toward the camera. Water splashes around their legs, and their hair moves naturally in the sea breeze. Warm sunset light reflects on the water with soft waves in the background, creating a romantic cinematic beach atmosphere. Shallow depth of field, soft bokeh, natural skin texture, sharp focus on faces, cinematic composition, premium lifestyle editorial photography, ultra-realistic."
+        },
+        {
+          "image": "categories/couple/vacation/couple_11.webp",
+          "prompt": "Ultra-realistic cinematic photograph of [Reference Couple] on a mountain road. A handsome man wearing a black leather jacket sits on a premium motorcycle while his beautiful girlfriend wearing an oversized beige jacket sits behind him hugging his waist. Both look directly into the camera with adventurous smiles. Mountain scenery, golden-hour lighting, travel aesthetic, ultra-photorealistic, cinematic atmosphere, viral Instagram style."
+        },
+        {
+          "image": "categories/couple/vacation/couple_12.webp",
+          "prompt": "Ultra-realistic cinematic photograph of [Reference Couple] on a rainy city street at night. A handsome man wearing a black jacket holds a transparent umbrella over himself and his beautiful girlfriend wearing an oversized beige sweater and short skirt. Both are looking directly into the camera while colorful neon lights reflect on the wet road. Romantic atmosphere, movie-scene aesthetic, ultra-photorealistic, cinematic lighting."
+        },
+        {
+          "image": "categories/couple/vacation/couple_13.webp",
+          "prompt": "Ultra-realistic cinematic photograph of [Reference Couple] in Venice, Italy. A handsome man and beautiful young woman stroll hand-in-hand beside a picturesque canal lined with historic buildings and flowers. Both are looking directly into the camera with bright smiles, faces sharp and clearly visible. Romantic European atmosphere, golden-hour sunlight, authentic vacation vibes, professional travel photography, DSLR quality, ultra-realistic."
+        },
+        {
+          "image": "categories/couple/vacation/couple_14.webp",
+          "prompt": "Ultra-realistic cinematic photograph of cool [Reference Couple] sitting at an outdoor cafe table in a modern European city. They are leaning in towards each other but looking directly at the camera with clear, open expressions, ensuring their faces are sharply visible. She has her hand resting on her chin; he has his arm on the back of her chair. Mid-day soft light, urban setting background with warm tones, high definition."
+        },
+        {
+          "image": "categories/couple/vacation/couple_15.webp",
+          "prompt": "Ultra-realistic cinematic photograph of cool [Reference Couple] walking hand-in-hand beneath blooming cherry blossom trees in Japan during sakura season. Pink petals fall softly around them, forming a dreamy floral tunnel under warm golden sunlight. Both look directly at the camera with clear, sharp faces and natural bright smiles. The man wears a beige jacket with light trousers, and the woman wears a soft pink sweater with a white skirt. Cinematic depth, soft natural lighting, shallow depth of field, photorealistic skin texture, professional DSLR travel photography style, vibrant yet natural tones, subtle motion in falling petals, ultra-detailed."
+        }
+      ]
+    },
+
+    {
+      "id": "professional",
+      "title": "Professional Headshots",
+      "type": "faceswap",
+
+      "templates": [
+        {
+          "image": "categories/professional/profe_1.webp"
+        },
+        {
+          "image": "categories/professional/profe_2.webp"
+        },
+        {
+          "image": "categories/professional/profe_3.webp"
+        },
+        {
+          "image": "categories/professional/profe_4.webp"
+        },
+        {
+          "image": "categories/professional/profe_5.webp"
+        }
+      ]
+    }
+
+
+  ]
+}
