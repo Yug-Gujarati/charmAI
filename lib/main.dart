@@ -14,6 +14,7 @@ import 'package:charmai/view_model/face_swap_provider.dart';
 import 'package:charmai/view_model/hair_style_changer_provider.dart';
 import 'package:charmai/view_model/image_generation_provider.dart';
 import 'package:charmai/view_model/image_picker_provider.dart';
+import 'package:charmai/view_model/premium_provider_screen.dart';
 import 'package:charmai/view_model/virtual_try_on_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -93,6 +94,10 @@ void main() async {
         ChangeNotifierProvider<DatingRedyImageProvider>(
           create: (_) => DatingRedyImageProvider(),
         ),
+        ChangeNotifierProvider<PremiumProvider>(
+          create: (_) => PremiumProvider(),
+        ),
+
       ],
       child: MyApp(initialLocale: locale),
     ),

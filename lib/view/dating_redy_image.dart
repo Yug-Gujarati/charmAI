@@ -34,7 +34,7 @@ class _DatingRedyImageState extends State<DatingRedyImage> {
   void initState() {
     // TODO: implement initState
     _fetchCoins();
-    FirebaseAnalyticsService.logEvent(eventName: "CA_IMAGE_ENHANCEMENT");
+    FirebaseAnalyticsService.logEvent(eventName: "CA_DATING_READY_IMAGE");
 
     super.initState();
   }
@@ -100,7 +100,7 @@ class _DatingRedyImageState extends State<DatingRedyImage> {
                           image: "assets/change_hair_style/button.png",
                           onTap: () {
                             if (imagePickerProvider.selectedImage == null) {
-                              showToast("Please first pick image");
+                              showToast("Please select your image");
                             } else {
                               if (coinProvider.coins >=
                                   AdsVariable

@@ -4,9 +4,9 @@ import 'package:charmai/utils/navigation.dart';
 import 'package:charmai/view/face_swap_screen.dart';
 import 'package:charmai/view/prompt_image_generation_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-
 import '../services/firebase_storage_service.dart';
 import '../utils/theme.dart';
 import '../view_model/category_provider.dart';
@@ -20,7 +20,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final storageService = FirebaseStorageService();
-
 
 
   @override
@@ -54,10 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 320,
+                      height: 900.h,
                       child: ListView.builder(
                         primary: false,
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
                         scrollDirection: Axis.horizontal,
                         physics: const BouncingScrollPhysics(),
                         itemCount: category.templates.length,
@@ -65,34 +64,29 @@ class _HomeScreenState extends State<HomeScreen> {
                           final template = category.templates[i];
                           final type = category.type;
                           final imageUrl = template.imageUrl;
-
-
-
                           if (imageUrl == null || imageUrl.isEmpty) {
                             return const SizedBox.shrink();
                           }
-
                           return Padding(
                             padding: const EdgeInsets.all(8),
                             child: GestureDetector(
                               onTap: () {
                                 if (type == "prompt") {
-
-                AdsSplashUtils.onShowAds(context, () {
-                  AppNavigation.NavigationPush(
-                      context, PromptImageGenerationScreen(image: imageUrl,
-                    prompt: template.prompt ?? "",
-                    title: category.title,));
-                });
+                                  AdsSplashUtils.onShowAds(context, () {
+                                    AppNavigation.NavigationPush(
+                                        context, PromptImageGenerationScreen(image: imageUrl,
+                                      prompt: template.prompt ?? "",
+                                      title: category.title,));
+                                  });
                                 } else {
-                AdsSplashUtils.onShowAds(context, () {
-                  AppNavigation.NavigationPush(context,
-                      FaceSwapScreen(image: imageUrl, title: category.title));
-                });
+                                  AdsSplashUtils.onShowAds(context, () {
+                                    AppNavigation.NavigationPush(context,
+                                        FaceSwapScreen(image: imageUrl, title: category.title));
+                                  });
                                 }
                               },
                               child: Container(
-                                width: 200,
+                                width: 600.w,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(24),
                                   boxShadow: [
@@ -123,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     ),
-                    const SizedBox(height: 16),
+                     SizedBox(height: 32.h),
                   ],
                 );
               },

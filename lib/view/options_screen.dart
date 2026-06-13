@@ -31,7 +31,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
         title: AppLocalizations
             .of(context)
             ?.aidatingimage ?? 'AI Dating Tool',
-        image: 'assets/home/dating.png',
+        image: 'assets/home/dating.webp',
         description: 'Create perfect profile pics',
         screen: const DatingRedyImage(),
       ),
@@ -39,7 +39,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
         title: AppLocalizations
             .of(context)
             ?.faceSwap ??'FacesWap',
-        image: 'assets/home/face_swape.png',
+        image: 'assets/home/face_swape.webp',
         description: 'AI-Powered Face Transformations',
         screen: const CustomFaceSwap(),
       ),
@@ -47,7 +47,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
         title: AppLocalizations
             .of(context)
             ?.chagehairstyle ??'Hairstyle Change',
-        image: 'assets/home/hair.png',
+        image: 'assets/home/hair.webp',
         description: 'Try 100+ Hairstyle Instantly',
         screen: const HairStyleChanger(),
       ),
@@ -55,7 +55,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
         title: AppLocalizations
             .of(context)
             ?.virtualtryon ??'Cloth Chanager',
-        image: 'assets/home/cloth.png',
+        image: 'assets/home/cloth.webp',
         description: 'Change outfits with AI',
         screen: const VirtualTryOnScreen(),
       ),
@@ -63,7 +63,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
         title: AppLocalizations
             .of(context)
             ?.suggesthairstyle ??'AI Hair Suggest',
-        image: 'assets/home/face_analyze.png',
+        image: 'assets/home/face_analyze.webp',
         description: 'Find your perfect look',
         screen: const FaceAnalyzer(),
       ),
@@ -71,7 +71,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
         title: AppLocalizations
             .of(context)
             ?.facebeauty ??'Face Beauty',
-        image: 'assets/home/face_buty.png',
+        image: 'assets/home/face_buty.webp',
         description: 'Enhance features naturally',
         screen: const FaceButyEnhance(),
       ),
@@ -124,9 +124,11 @@ class _OptionsScreenState extends State<OptionsScreen> {
                     text: tool.title,
                     fontSize: 45,
                     textColor: AppColors.primaryText,
-                    width: 300,
+                    width: 350,
                     fontFamily: 'regular',
-                    maxline: 1
+                    maxline: 1,
+                    align: TextAlign.center
+
                 ),
                 // Text(
                 //   tool.title,

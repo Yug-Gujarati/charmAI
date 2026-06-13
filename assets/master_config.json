@@ -1,32 +1,98 @@
 {
   "version": 2,
- "categories": [
+  "categories": [
 
    {
      "id": "dating",
-     "title": "Dating Photos",
+     "title": "Classic Dating Photos",
      "type": "faceswap",
 
      "templates": [
        {
-         "image": "categories/dating/dating_1.webp"
+         "image": "categories/dating/classic/dating_1.webp"
        },
        {
-         "image": "categories/dating/dating_2.webp"
+         "image": "categories/dating/classic/dating_2.webp"
        },
        {
-         "image": "categories/dating/dating_3.webp"
+         "image": "categories/dating/classic/dating_3.webp"
        },
        {
-         "image": "categories/dating/dating_4.webp"
+         "image": "categories/dating/classic/dating_4.webp"
        },
        {
-         "image": "categories/dating/dating_5.webp"
+         "image": "categories/dating/classic/dating_5.webp"
+       },
+       {
+         "image": "categories/dating/classic/dating_6.webp"
+       },
+       {
+         "image": "categories/dating/classic/dating_7.webp"
+       },
+       {
+         "image": "categories/dating/classic/dating_8.webp"
+       },
+       {
+         "image": "categories/dating/classic/dating_9.webp"
+       },
+       {
+         "image": "categories/dating/classic/dating_10.webp"
        }
 
      ]
    },
 
+   {
+     "id": "dating",
+     "title": "Premium Dating Photos",
+     "type": "faceswap",
+
+     "templates": [
+       {
+         "image": "categories/dating/premium/dating_1.webp"
+       },
+       {
+         "image": "categories/dating/premium/dating_2.webp"
+       },
+       {
+         "image": "categories/dating/premium/dating_3.webp"
+       },
+       {
+         "image": "categories/dating/premium/dating_4.webp"
+       },
+       {
+         "image": "categories/dating/premium/dating_5.webp"
+       },
+       {
+         "image": "categories/dating/premium/dating_6.webp"
+       },
+       {
+         "image": "categories/dating/premium/dating_7.webp"
+       },
+       {
+         "image": "categories/dating/premium/dating_8.webp"
+       },
+       {
+         "image": "categories/dating/premium/dating_9.webp"
+       },
+       {
+         "image": "categories/dating/premium/dating_10.webp"
+       },
+       {
+         "image": "categories/dating/premium/dating_11.webp"
+       },
+       {
+         "image": "categories/dating/premium/dating_12.webp"
+       },
+       {
+         "image": "categories/dating/premium/dating_13.webp"
+       },
+       {
+         "image": "categories/dating/premium/dating_14.webp"
+       }
+
+     ]
+   },
 
    {
      "id": "couple",
@@ -164,10 +230,26 @@
         },
         {
           "image": "categories/professional/profe_5.webp"
+        },
+        {
+          "image": "categories/professional/profe_6.webp"
+        },
+        {
+          "image": "categories/professional/profe_7.webp"
+        },
+        {
+          "image": "categories/professional/profe_8.webp"
+        },
+        {
+          "image": "categories/professional/profe_9.webp"
+        },
+        {
+          "image": "categories/professional/profe_10.webp"
+        },
+        {
+          "image": "categories/professional/profe_11.webp"
         }
       ]
     }
-
-
   ]
 }

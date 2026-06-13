@@ -171,9 +171,12 @@ class _CoinPurchaseState extends State<CoinPurchase> {
         return Container(
           color: Colors.black.withOpacity(0.2),
           child: Center(
-            child: Lottie.asset(
-              "assets/premium/sparkels.json",
-              height: 20.h,
+            child: Transform.scale(
+              scale: 2,
+              child: Lottie.asset(
+                "assets/premium/sparkels.json",
+                height: 100.h,
+              ),
             ),
           ),
         );

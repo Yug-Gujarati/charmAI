@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../ads/analytics_service.dart';
 import '../l10n/app_localizations.dart';
+import '../utils/app_constants.dart';
 import '../utils/custom_text.dart';
 import '../utils/custome_buttom.dart';
 import '../utils/globalVariables.dart';
@@ -39,9 +41,33 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   }
 
   @override
+  void initState() {
+    _fetchCoins();
+    FirebaseAnalyticsService.logEvent(eventName: "CA_BOTTOM_NAV_BAR_SCREEN");
+
+    super.initState();
+  }
+
+
+  int currentCoins = 0;
+
+  Future<void> _fetchCoins() async {
+    String deviceId = await context.read<CoinProvider>().getRandomId();
+
+    await context.read<CoinProvider>().fetchCoins();
+
+    // Now read the updated value
+    setState(() {
+      currentCoins = context.read<CoinProvider>().coins;
+      showLog("Correct coin is $currentCoins");
+    });
+  }
+
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Column(
         children: [
           Padding(
@@ -126,36 +152,46 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
             ),
           ),
           Expanded(
-            child: _screens[_selectedIndex],
+            child: Stack(
+              children: [
+                _screens[_selectedIndex],
+                Positioned(
+                  bottom: 10.h,
+                  left: 20.w,
+                  right: 20.w,
+                  child: Container(
+                    height: 130.h,
+                    width: 700.w,
+                    margin: EdgeInsets.fromLTRB(120.w, 0.w, 120.w, 70.w),
+                    decoration: BoxDecoration(
+                      color: AppColors.surfaceDark.withOpacity(0.9),
+
+                      borderRadius: BorderRadius.circular(30),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.1),
+                        width: 1,
+                      ),
+
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(40),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          _buildNavItem(0, "assets/home/categorys.png", 'assets/home/categorys_unpress.png', 'Category'),
+                          _buildNavItem(1, "assets/home/options.png", 'assets/home/options_unpress.png', 'Options'),
+                          _buildNavItem(2, "assets/home/saved_pressed.png", 'assets/home/saved_unpressedd.png' ,'Saved'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        height: 130.h,
-        width: 700.w,
-        margin: EdgeInsets.fromLTRB(120.w, 0.w, 120.w, 70.w),
-        decoration: BoxDecoration(
-          color: AppColors.surfaceDark.withOpacity(0.9),
 
-          borderRadius: BorderRadius.circular(30),
-          border: Border.all(
-            color: Colors.white.withOpacity(0.1),
-            width: 1,
-          ),
-
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(40),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildNavItem(0, "assets/home/categorys.png", 'assets/home/categorys_unpress.png', 'Category'),
-              _buildNavItem(1, "assets/home/options.png", 'assets/home/options_unpress.png', 'Options'),
-              _buildNavItem(2, "assets/home/saved_pressed.png", 'assets/home/saved_unpressedd.png' ,'Saved'),
-            ],
-          ),
-        ),
-      ),
     );
   }
 

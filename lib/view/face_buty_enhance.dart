@@ -33,7 +33,7 @@ class _FaceButyEnhanceState extends State<FaceButyEnhance> {
   @override
   void initState() {
     _fetchCoins();
-    FirebaseAnalyticsService.logEvent(eventName: "CA_HAIRSTYLE_SCREEN");
+    FirebaseAnalyticsService.logEvent(eventName: "CA_FACE_BUTY_ENHANCE_SCREEN");
 
     super.initState();
   }

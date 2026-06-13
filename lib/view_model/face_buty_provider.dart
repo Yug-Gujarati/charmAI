@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../ads/AdsVariable.dart';
 import '../utils/app_constants.dart';
+import 'coin_managment.dart';
 
 class FaceBeautyProvider extends ChangeNotifier {
   bool isLoading = false;
@@ -142,6 +144,12 @@ class FaceBeautyProvider extends ChangeNotifier {
             if (saved != null) {
               _resultImage = saved;
               _setLoading(false);
+              final coinProvider = Provider.of<CoinProvider>(
+                context,
+                listen: false,
+              );
+              coinProvider.decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
+
               Fluttertoast.showToast(msg: "Face beauty applied successfully!");
             } else {
               _handleError("Failed to download result image. Please try again.");

@@ -36,7 +36,7 @@ class _FaceSwapScreenState extends State<FaceSwapScreen> {
   @override
   void initState() {
     _fetchCoins();
-    FirebaseAnalyticsService.logEvent(eventName: "CA_HAIRSTYLE_SCREEN");
+    FirebaseAnalyticsService.logEvent(eventName: "CA_FACE_SWAP_SCREEN");
 
     super.initState();
   }
@@ -97,7 +97,6 @@ class _FaceSwapScreenState extends State<FaceSwapScreen> {
                                   child: GestureDetector(
                                     onTap: () {
                                       provider.pickTargetImage();
-
                                     },
                                     child: DottedBorder(
                                       options: CircularDottedBorderOptions(
@@ -166,6 +165,9 @@ class _FaceSwapScreenState extends State<FaceSwapScreen> {
                                   onTap: () {
                                     if(provider.isLoading){
                                       showToast("Please wait we generating image");
+                                    }
+                                    else if(provider.targetImage == null){
+                                      showToast("Please pick image of face");
                                     }
                                     else {
                                       if (value.coins >=

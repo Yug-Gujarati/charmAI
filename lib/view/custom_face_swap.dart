@@ -39,7 +39,7 @@ class _CustomFaceSwapState extends State<CustomFaceSwap> {
   void initState() {
     // TODO: implement initState
     _fetchCoins();
-    FirebaseAnalyticsService.logEvent(eventName: "CA_HAIRSTYLE_SCREEN");
+    FirebaseAnalyticsService.logEvent(eventName: "CA_CUSTOM_FACESWAP_SCREEN");
 
     super.initState();
   }
@@ -171,10 +171,10 @@ class _CustomFaceSwapState extends State<CustomFaceSwap> {
                           image: "assets/change_hair_style/button.png",
                           onTap: ()  {
                             if(customFaceProvider.targetImage == null){
-                              showToast("Please select cloth image first");
+                              showToast("Please select target image");
                             }
                             else if(imageProvider.selectedImage == null){
-                              showToast("Please select your full body image first");
+                              showToast("Please select your face image");
                             }
                             else {
                               showLog("this is else method");

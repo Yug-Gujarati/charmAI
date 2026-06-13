@@ -39,7 +39,7 @@ class _PromptImageGenerationScreenState extends State<PromptImageGenerationScree
   @override
   void initState() {
     _fetchCoins();
-    FirebaseAnalyticsService.logEvent(eventName: "CA_HAIRSTYLE_SCREEN");
+    FirebaseAnalyticsService.logEvent(eventName: "CA_PROMPT_IMAGE_GENERATION_SCREEN");
 
     super.initState();
   }
