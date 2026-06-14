@@ -124,7 +124,7 @@ class _FaceSwapScreenState extends State<FaceSwapScreen> {
                                         padding: EdgeInsets.all(10),
                                         child: provider.targetImage != null
                                             ? ClipRRect(
-                                          borderRadius: BorderRadius.circular(500),
+                                          borderRadius: BorderRadius.circular(500.r),
                                           child: Image.file(
                                             provider.targetImage!,
                                             fit: BoxFit.cover,

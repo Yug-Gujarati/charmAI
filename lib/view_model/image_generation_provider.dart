@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:charmai/utils/navigation.dart';
+import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image/image.dart' as img;
@@ -180,56 +182,18 @@ class ImageGenerationProvider extends ChangeNotifier {
   // ─── Merge Boy + Girl Side by Side ───────────────────────────
   Future<File?> _mergeImages(File boyFile, File girlFile) async {
     try {
-      final img.Image? boyImg = img.decodeImage(await boyFile.readAsBytes());
-      final img.Image? girlImg = img.decodeImage(await girlFile.readAsBytes());
+      final boyBytes = await boyFile.readAsBytes();
+      final girlBytes = await girlFile.readAsBytes();
 
-      if (boyImg == null || girlImg == null) {
-        showLog("Failed to decode one or both images");
+      // Run heavy image processing in a background isolate to prevent UI freeze
+      final Uint8List? finalBytes = await compute(
+        processImagesInIsolate,
+        {'boy': boyBytes, 'girl': girlBytes},
+      );
+
+      if (finalBytes == null) {
+        showLog("Failed to decode or merge images");
         return null;
-      }
-
-      // Resize both to same height keeping aspect ratio
-      const int targetHeight = 2000;
-
-      final img.Image resizedBoy = img.copyResize(
-        boyImg,
-        height: targetHeight,
-        width: (boyImg.width * targetHeight / boyImg.height).round(),
-      );
-
-      final img.Image resizedGirl = img.copyResize(
-        girlImg,
-        height: targetHeight,
-        width: (girlImg.width * targetHeight / girlImg.height).round(),
-      );
-
-      // Create canvas for side-by-side merge
-      final int totalWidth = resizedBoy.width + resizedGirl.width;
-      final img.Image merged = img.Image(width: totalWidth, height: targetHeight);
-
-      // Fill background black
-      img.fill(merged, color: img.ColorRgb8(0, 0, 0));
-
-      // Boy on left, girl on right
-      img.compositeImage(merged, resizedBoy, dstX: 0, dstY: 0);
-      img.compositeImage(merged, resizedGirl, dstX: resizedBoy.width, dstY: 0);
-
-      // ─── Final Safety Resize (API limit: 4096x4096) ───────────
-      img.Image finalImage = merged;
-
-      if (merged.width > 4096 || merged.height > 4096) {
-        double scaleW = 4096 / merged.width;
-        double scaleH = 4096 / merged.height;
-        double scale = scaleW < scaleH ? scaleW : scaleH;
-
-        finalImage = img.copyResize(
-          merged,
-          width: (merged.width * scale).round(),
-          height: (merged.height * scale).round(),
-        );
-        //showLog("Resized merged image to fit API limit: ${finalImage.width}x${finalImage.height}");
-      } else {
-        //showLog("Merged image within API limit: ${merged.width}x${merged.height}");
       }
 
       // Save to temp directory
@@ -237,7 +201,7 @@ class ImageGenerationProvider extends ChangeNotifier {
       final String mergedPath =
           '${tempDir.path}/merged_${DateTime.now().millisecondsSinceEpoch}.jpg';
       final File mergedFile = File(mergedPath);
-      await mergedFile.writeAsBytes(img.encodeJpg(finalImage, quality: 90));
+      await mergedFile.writeAsBytes(finalBytes);
 
       // ─── File Size Check (API limit: 10MB) ────────────────────
       final fileSize = await mergedFile.length();
@@ -255,7 +219,7 @@ class ImageGenerationProvider extends ChangeNotifier {
   Future<bool> generateImage(BuildContext context, String prompt) async {
     if (_boyImage == null || _girlImage == null) {
       _setError("Please select both images.");
-     showToast("Please select both images.");
+      showToast("Please select both images.");
       return false;
     }
 
@@ -295,7 +259,7 @@ class ImageGenerationProvider extends ChangeNotifier {
 
       request.headers[apiKeyField] = aiLabApiKey;
 
-      request.fields['style_title'] = 'Couple';
+      request.fields['style_title'] = 'Couple cinematic photoshoot, realistic image';
       request.fields['style_desc'] = prompt;
       request.fields['image_size'] = '9:16';
       request.fields['task_type'] = 'async';
@@ -367,6 +331,7 @@ class ImageGenerationProvider extends ChangeNotifier {
     }
 
     _setLoading(true);
+    final coinProvider = Provider.of<CoinProvider>(context, listen: false);
 
     for (int attempt = 0; attempt < maxAttempts; attempt++) {
       try {
@@ -409,16 +374,13 @@ class ImageGenerationProvider extends ChangeNotifier {
                 showLog("this is result image");
                 // final coinProvider = Provider.of<CoinProvider>(context, listen: false);
                 // coinProvider.decrementCoins(AdsVariable.ca_reduce_coin_on_hair_style);
-               // _setLoading(false);
-               //  _saveImageLocally(resultImageUrl!);
-               //  showLog("after image succefully saved");
-               //  AppNavigation.NavigationPush(context, ResultScreen(imageUrl: resultImageUrl!));
+                // _setLoading(false);
+                //  _saveImageLocally(resultImageUrl!);
+                //  showLog("after image succefully saved");
+                //  AppNavigation.NavigationPush(context, ResultScreen(imageUrl: resultImageUrl!));
                 _resultImage = await _saveImageLocally(resultImageUrl!);
 
-                if (context.mounted) {
-                  Provider.of<CoinProvider>(context, listen: false)
-                      .decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
-                }
+                await coinProvider.decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
 
                 _setLoading(false);
 
@@ -473,33 +435,6 @@ class ImageGenerationProvider extends ChangeNotifier {
     return false;
   }
 
-  // // ─── Save Image Locally (unchanged) ──────────────────────────
-  // Future<void> _saveImageLocally(String imageUrl) async {
-  //   try {
-  //     final response = await http.get(Uri.parse(imageUrl));
-  //     if (response.statusCode == 200) {
-  //       final directory = await getApplicationDocumentsDirectory();
-  //       final fileName =
-  //           'charm_ai${DateTime
-  //           .now()
-  //           .millisecondsSinceEpoch}.jpg';
-  //       final file = File('${directory.path}/$fileName');
-  //       await file.writeAsBytes(response.bodyBytes);
-  //
-  //       final prefs = await SharedPreferences.getInstance();
-  //       final List<String> savedImages =
-  //           prefs.getStringList('saved_generated_images') ?? [];
-  //       savedImages.add(file.path);
-  //       await prefs.setStringList('saved_generated_images', savedImages);
-  //
-  //       showLog("Image saved locally: ${file.path}");
-  //     }
-  //   } catch (e) {
-  //     showLog("Error saving image: $e");
-  //   }
-  // }
-  //
-
 
   Future<File?> _saveImageLocally(String imageUrl) async {
     try {
@@ -526,10 +461,50 @@ class ImageGenerationProvider extends ChangeNotifier {
       return null;
     }
   }
-
 }
 
+// Top-level function for background isolate
+Uint8List? processImagesInIsolate(Map<String, Uint8List> args) {
+  final img.Image? boyImg = img.decodeImage(args['boy']!);
+  final img.Image? girlImg = img.decodeImage(args['girl']!);
 
+  if (boyImg == null || girlImg == null) return null;
+
+  const int targetHeight = 2000;
+
+  final img.Image resizedBoy = img.copyResize(
+    boyImg,
+    height: targetHeight,
+    width: (boyImg.width * targetHeight / boyImg.height).round(),
+  );
+
+  final img.Image resizedGirl = img.copyResize(
+    girlImg,
+    height: targetHeight,
+    width: (girlImg.width * targetHeight / girlImg.height).round(),
+  );
+
+  final int totalWidth = resizedBoy.width + resizedGirl.width;
+  final img.Image merged = img.Image(width: totalWidth, height: targetHeight);
+
+  img.fill(merged, color: img.ColorRgb8(0, 0, 0));
+  img.compositeImage(merged, resizedBoy, dstX: 0, dstY: 0);
+  img.compositeImage(merged, resizedGirl, dstX: resizedBoy.width, dstY: 0);
+
+  img.Image finalImage = merged;
+  if (merged.width > 4096 || merged.height > 4096) {
+    double scaleW = 4096 / merged.width;
+    double scaleH = 4096 / merged.height;
+    double scale = scaleW < scaleH ? scaleW : scaleH;
+    finalImage = img.copyResize(
+      merged,
+      width: (merged.width * scale).round(),
+      height: (merged.height * scale).round(),
+    );
+  }
+
+  return img.encodeJpg(finalImage, quality: 90);
+}
 
 //6e64ff07c4462faf8605ece3d9ce721a
 //https://ai-result-rapidapi.ailabtools.com/image/photography/2026-04-10/191234-c53ad27e-5e0b-4a1b-fb68-c0eb479ec3ee-1775819554.png

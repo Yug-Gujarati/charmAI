@@ -42,6 +42,7 @@ class DatingRedyImageProvider extends ChangeNotifier{
   /// Enhance image using Gemini API
   Future<void> datingImageGenerator(File selectedImage, BuildContext context) async {
     _setLoading(true);
+    final coinProvider = Provider.of<CoinProvider>(context, listen: false);
 
     try {
       final userBytes = await selectedImage.readAsBytes();
@@ -128,12 +129,8 @@ Output ultra-realistic DSLR portrait, vertical 9:16, minimum 2048×4096 resoluti
 
 
               // Deduct coins
-              if (context.mounted) {
-                Provider.of<CoinProvider>(
-                  context,
-                  listen: false,
-                ).decrementCoins(AdsVariable.ca_reduce_coin_on_gemini_api);
-              }
+              await coinProvider.decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
+
               // Navigate to result screen
               if (context.mounted && resultImage != null) {
                 AppNavigation.NavigationPush(

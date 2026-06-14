@@ -107,9 +107,10 @@ class CoinProvider extends ChangeNotifier {
 
   // Decrement coins (e.g., when coins are spent, e.g., API calls)
   Future<void> decrementCoins(int amount) async {
+    showLog('Call decrement coind method');
     String randomId = await getRandomId();
     int? currentCoins = await getCoins(randomId);
-
+    showLog('decrementCoins: currentCoins=$currentCoins, amount=$amount');
     if (currentCoins != null && currentCoins >= amount) {
       currentCoins -= amount;
       await saveCoins(randomId, currentCoins);

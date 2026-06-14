@@ -220,6 +220,7 @@ class CustomFaceSwapProvider extends ChangeNotifier {
     }
 
     _setLoading(true);
+    final coinProvider = Provider.of<CoinProvider>(context, listen: false);
 
     for (int attempt = 0; attempt < maxAttempts; attempt++) {
       try {
@@ -263,10 +264,7 @@ class CustomFaceSwapProvider extends ChangeNotifier {
 
                 _resultImage = await _saveImageLocally(imageUrl);
 
-                if (context.mounted) {
-                  Provider.of<CoinProvider>(context, listen: false)
-                      .decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
-                }
+                await coinProvider.decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
 
                 _setLoading(false);
 

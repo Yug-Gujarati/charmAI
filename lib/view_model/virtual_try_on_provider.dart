@@ -210,7 +210,7 @@ class VirtualTryOnProvider extends ChangeNotifier {
 
           if (_taskId != null && _taskId!.isNotEmpty) {
             showLog("Task ID received: $_taskId");
-            _setLoading(false); // brief loading pause before polling
+            _setLoading(false);
             await _pollTaskResult(context: context);
           } else {
             showLog("No task_id in response");
@@ -240,6 +240,8 @@ class VirtualTryOnProvider extends ChangeNotifier {
       _handleError('No task ID available');
       return false;
     }
+
+    final coinProvider = Provider.of<CoinProvider>(context, listen: false);
 
     _setLoading(true);
 
@@ -287,10 +289,7 @@ class VirtualTryOnProvider extends ChangeNotifier {
                 _resultImage = await _saveImageLocally(imageUrl);
 
                 // Deduct coins
-                if (context.mounted) {
-                  Provider.of<CoinProvider>(context, listen: false)
-                      .decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
-                }
+                await coinProvider.decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
 
                 _setLoading(false);
 

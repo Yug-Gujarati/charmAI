@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:charmai/utils/navigation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_cropper/image_cropper.dart';
@@ -147,26 +148,27 @@ class FaceSwapProvider extends ChangeNotifier {
     try {
       showLog("Checking cache for template: $imageUrl");
       final File cachedFile = await DefaultCacheManager().getSingleFile(imageUrl);
-      
+
       // Check if the file is WebP (AILabAPI doesn't support WebP)
       if (cachedFile.path.toLowerCase().endsWith('.webp')) {
         showLog("WebP detected. Converting to JPG for API compatibility...");
-        
+
         final bytes = await cachedFile.readAsBytes();
-        final image = img.decodeImage(bytes);
-        
-        if (image != null) {
-          final jpgBytes = img.encodeJpg(image, quality: 90);
+       // final image = img.decodeImage(bytes);
+        final jpgBytes = await compute(convertWebpToJpg, bytes);
+
+        if (jpgBytes != null) {
+          //final jpgBytes = img.encodeJpg(jpgBytes, quality: 90);
           final tempDir = await getTemporaryDirectory();
           final jpgPath = '${tempDir.path}/temp_template_${DateTime.now().millisecondsSinceEpoch}.jpg';
           final jpgFile = File(jpgPath);
           await jpgFile.writeAsBytes(jpgBytes);
-          
+
           showLog("Conversion complete: $jpgPath");
           return jpgFile;
         }
       }
-      
+
       showLog("Template file ready: ${cachedFile.path}");
       return cachedFile;
     } catch (e) {
@@ -191,7 +193,7 @@ class FaceSwapProvider extends ChangeNotifier {
     try {
       // Step 1: Get template from local cache (Instant & Free)
       final File? templateFile = await _getTemplateFile(templateUrl);
-      
+
       if (templateFile == null) {
         _setError("Failed to load template image.");
         _setLoading(false);
@@ -214,6 +216,7 @@ class FaceSwapProvider extends ChangeNotifier {
     try {
       showLog("this is target image $targetImage");
       showLog("this is template file $templateFile");
+      showLog("this is apikey $aiLabApiKey");
 
       var request = http.MultipartRequest(
         'POST',
@@ -222,7 +225,7 @@ class FaceSwapProvider extends ChangeNotifier {
 
       request.headers[apiKeyField] = aiLabApiKey;
 
-      // image_target = user's face photo
+
       request.files.add(
         await http.MultipartFile.fromPath(
           'image_target',
@@ -231,7 +234,7 @@ class FaceSwapProvider extends ChangeNotifier {
         ),
       );
 
-      // image_template = template downloaded from Firebase cache
+
       request.files.add(
         await http.MultipartFile.fromPath(
           'image_template',
@@ -298,6 +301,7 @@ class FaceSwapProvider extends ChangeNotifier {
     }
 
     _setLoading(true);
+    final coinProvider = Provider.of<CoinProvider>(context, listen: false);
 
     for (int attempt = 0; attempt < maxAttempts; attempt++) {
       try {
@@ -357,10 +361,7 @@ class FaceSwapProvider extends ChangeNotifier {
                 _resultImage = await _saveImageLocally(resultImageUrl!);
 
                 // Deduct coins
-                if (context.mounted) {
-                  Provider.of<CoinProvider>(context, listen: false)
-                      .decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
-                }
+                await coinProvider.decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
 
                 _setLoading(false);
 
@@ -447,4 +448,15 @@ class FaceSwapProvider extends ChangeNotifier {
       return null;
     }
   }
+
+}
+
+// This function MUST be completely outside the class!
+// Isolates cannot serialize the FaceSwapProvider class to run it.
+List<int>? convertWebpToJpg(Uint8List bytes) {
+  final image = img.decodeImage(bytes);
+  if (image != null) {
+    return img.encodeJpg(image, quality: 90);
+  }
+  return null;
 }

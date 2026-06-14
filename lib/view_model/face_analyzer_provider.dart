@@ -48,6 +48,8 @@ class FaceAnalyzerProvider extends ChangeNotifier {
     final manStyles = HairstyleData.maleHairstyles.keys.join(", ");
     final womanStyles = HairstyleData.femaleHairstyles.keys.join(", ");
 
+    final coinProvider = Provider.of<CoinProvider>(context, listen: false);
+
     try {
       final bytes = await selectedImage.readAsBytes();
       final base64Image = base64Encode(bytes);
@@ -100,22 +102,26 @@ Pick from the lists and return JSON:
         }),
       );
 
+      showLog("this is data ${response.body}");
+
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
+        showLog("this is data $data");
         // Clean JSON response from Gemini
         final String textResponse =
             data['candidates'][0]['content']['parts'][0]['text'];
 
         // No RegExp needed anymore!
         final result = jsonDecode(textResponse);
-
+        showLog("After result print: $result");
         _analysisResult = result;
         _setLoading(false);
-        final coinProvider = Provider.of<CoinProvider>(
-          context,
-          listen: false,
-        );
-        coinProvider.decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
+        showLog("this is befaure coin provider $result");
+        showLog("context.mounted = ${context.mounted}");
+
+        await coinProvider.decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
+
+
         showLog("Analysis successful: $result");
       } else {
         _setLoading(false);

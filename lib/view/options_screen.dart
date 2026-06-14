@@ -116,7 +116,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
           },
           isShowAd: false,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(32.w),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -126,7 +126,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
                     textColor: AppColors.primaryText,
                     width: 350,
                     fontFamily: 'regular',
-                    maxline: 1,
+                    maxline: 2,
                     align: TextAlign.center
 
                 ),

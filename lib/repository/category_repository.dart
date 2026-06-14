@@ -26,10 +26,12 @@ class CategoryRepository {
           .map((e) => CategoryModel.fromJson(e))
           .toList();
 
-      // Instantly construct URLs for all templates (Zero cost, no async wait)
+
       for (var category in categories) {
         for (var template in category.templates) {
-          template.imageUrl = firebaseService.getPublicUrl(template.image);
+         // template.imageUrl = firebaseService.getPublicUrl(template.image);
+          String baseUrl = firebaseService.getPublicUrl(template.image);
+          template.imageUrl = "$baseUrl&v=$jsonVersion";
         }
       }
 

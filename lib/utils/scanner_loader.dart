@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -52,8 +53,13 @@ class _ScannerLoaderState extends State<ScannerLoader>
       return Image.file(widget.imagePath as File, fit: BoxFit.cover);
     } else if (widget.imagePath is String) {
       String path = widget.imagePath as String;
-      if (path.startsWith('http')) {
-        return Image.network(path, fit: BoxFit.cover);
+      if (path.startsWith('http') || path.startsWith('https')) {
+        return CachedNetworkImage(
+          imageUrl: path,
+          fit: BoxFit.cover,
+          placeholder: (context, url) => Container(color: Colors.grey[900]),
+          errorWidget: (context, url, error) => Container(color: Colors.grey[900]),
+        );
       } else {
         return Image.asset(path, fit: BoxFit.cover);
       }

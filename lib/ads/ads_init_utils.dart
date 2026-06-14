@@ -113,6 +113,7 @@ class AdsSplashUtils {
 
           AdsVariable.ca_click = mapValues1["ca_click"];
           AdsVariable.ca_gemini_api_key = mapValues1["ca_gemini_api_key"];
+          AdsVariable.ca_ai_lab_tool_api = mapValues1["ca_ai_lab_tool_api"];
 
           AdsVariable.ca_week_bonus_coin = mapValues1["ca_week_bonus_coin"];
           AdsVariable.ca_month_bonus_coin = mapValues1["ca_month_bonus_coin"];

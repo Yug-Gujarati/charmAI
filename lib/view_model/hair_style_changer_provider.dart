@@ -171,6 +171,8 @@ class HairStyleChangerProvider extends ChangeNotifier {
 
     _setLoading(true);
 
+    final coinProvider = Provider.of<CoinProvider>(context, listen: false);
+
     for (int attempt = 0; attempt < maxAttempts; attempt++) {
       try {
         await Future.delayed(Duration(seconds: delaySeconds));
@@ -202,13 +204,7 @@ class HairStyleChangerProvider extends ChangeNotifier {
 
                 if (resultImageUrl != null) {
                   showLog("this is result image first");
-                  final coinProvider = Provider.of<CoinProvider>(
-                    context,
-                    listen: false,
-                  );
-                  coinProvider.decrementCoins(
-                    AdsVariable.ca_reduce_coin_on_ai_lab_api,
-                  );
+                  await coinProvider.decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
                   _setLoading(false);
                   notifyListeners();
                   _saveImageLocally(resultImageUrl!);
@@ -226,13 +222,9 @@ class HairStyleChangerProvider extends ChangeNotifier {
                   showLog(
                     "Successfully got result image from alternative path: $resultImageUrl",
                   );
-                  final coinProvider = Provider.of<CoinProvider>(
-                    context,
-                    listen: false,
-                  );
-                  coinProvider.decrementCoins(
-                    AdsVariable.ca_reduce_coin_on_ai_lab_api,
-                  );
+
+
+                  await coinProvider.decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
                   _setLoading(false);
                   notifyListeners();
                   _saveImageLocally(resultImageUrl!);

@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
           : ListView.builder(
               primary: false,
               physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.zero,
+              padding: EdgeInsets.only(bottom: 200.h, top: 0),
               itemCount: provider.categories.length,
               itemBuilder: (context, index) {
                 final category = provider.categories[index];

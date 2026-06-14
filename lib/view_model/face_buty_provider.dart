@@ -95,6 +95,7 @@ class FaceBeautyProvider extends ChangeNotifier {
       BuildContext context,
       ) async {
     _setLoading(true);
+    final coinProvider = Provider.of<CoinProvider>(context, listen: false);
 
     try {
       final request = http.MultipartRequest(
@@ -144,11 +145,7 @@ class FaceBeautyProvider extends ChangeNotifier {
             if (saved != null) {
               _resultImage = saved;
               _setLoading(false);
-              final coinProvider = Provider.of<CoinProvider>(
-                context,
-                listen: false,
-              );
-              coinProvider.decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
+              await coinProvider.decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
 
               Fluttertoast.showToast(msg: "Face beauty applied successfully!");
             } else {

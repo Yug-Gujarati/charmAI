@@ -50,7 +50,6 @@ class _SavedImagesState extends State<SavedImages> {
   }
 
 
-
   Future<void> _deleteImage(String filePath) async {
     try {
       final file = File(filePath);
@@ -62,11 +61,15 @@ class _SavedImagesState extends State<SavedImages> {
           prefs.getStringList('saved_generated_images') ?? [];
       paths.remove(filePath);
       await prefs.setStringList('saved_generated_images', paths);
-      setState(() {});
+
       showToast("Image deleted");
+      setState(() {
+        _savedImagesFuture = _loadSavedImages();
+      });
     } catch (e) {
       showLog("Error deleting image: $e");
       showToast("Failed to delete image");
+      setState(() {});
     }
   }
 
@@ -127,7 +130,7 @@ class _SavedImagesState extends State<SavedImages> {
                   }
 
                   return GridView.builder(
-                    padding: EdgeInsets.only(top: 20.h, bottom: 50.h),
+                    padding: EdgeInsets.only(top: 20.h, bottom: 200.h),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 30.w,
