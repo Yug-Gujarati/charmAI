@@ -129,7 +129,7 @@ Output ultra-realistic DSLR portrait, vertical 9:16, minimum 2048×4096 resoluti
 
 
               // Deduct coins
-              await coinProvider.decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
+              await coinProvider.decrementCoins(AdsVariable.ca_reduce_coin_on_gemini_api);
 
               // Navigate to result screen
               if (context.mounted && resultImage != null) {

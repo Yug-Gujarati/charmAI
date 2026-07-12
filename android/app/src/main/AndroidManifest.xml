@@ -10,7 +10,7 @@
 
 
     <application
-        android:label="charmai"
+        android:label="Charm AI"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="false"
@@ -52,7 +52,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-6166151701902995~8939202770"/>
+            android:value="ca-app-pub-6166151701902995~5388132003"/>
 
         <property
             android:name="android.adservices.AD_SERVICES_CONFIG"

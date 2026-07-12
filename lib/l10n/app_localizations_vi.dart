@@ -226,4 +226,10 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get creditneveexpire => 'Tín dụng không bao giờ hết hạn';
+
+  @override
+  String get surprise => 'Surprise';
+
+  @override
+  String get surpriseme => 'Surprise me';
 }

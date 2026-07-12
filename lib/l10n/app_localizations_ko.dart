@@ -226,4 +226,10 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get creditneveexpire => '크레딧은 만료되지 않습니다';
+
+  @override
+  String get surprise => 'Surprise';
+
+  @override
+  String get surpriseme => 'Surprise me';
 }

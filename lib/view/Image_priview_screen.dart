@@ -169,7 +169,7 @@ class _ImagePriviewScreenState extends State<ImagePriviewScreen> {
                             width: 450.w,
                             onTap: _shareImage,
                             isShowAd: false,
-                            image: 'assets/priview/recordings2.png',
+                            image: 'assets/intro/next_pressed.png',
                             child: Center(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,

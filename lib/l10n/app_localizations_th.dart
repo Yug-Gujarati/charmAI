@@ -226,4 +226,10 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get creditneveexpire => 'เครดิตไม่มีวันหมดอายุ';
+
+  @override
+  String get surprise => 'Surprise';
+
+  @override
+  String get surpriseme => 'Surprise me';
 }

@@ -226,4 +226,10 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get creditneveexpire => 'クレジットは期限切れになりません';
+
+  @override
+  String get surprise => 'Surprise';
+
+  @override
+  String get surpriseme => 'Surprise me';
 }

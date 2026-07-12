@@ -226,4 +226,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get creditneveexpire => 'Os créditos nunca expiram';
+
+  @override
+  String get surprise => 'Surprise';
+
+  @override
+  String get surpriseme => 'Surprise me';
 }

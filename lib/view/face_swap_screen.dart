@@ -111,7 +111,7 @@ class _FaceSwapScreenState extends State<FaceSwapScreen> {
                                         ),
                                       ),
                                       child: Container(
-                                        height: 350.h,
+                                        height: 400.h,
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: Colors.black,
@@ -124,7 +124,7 @@ class _FaceSwapScreenState extends State<FaceSwapScreen> {
                                         padding: EdgeInsets.all(10),
                                         child: provider.targetImage != null
                                             ? ClipRRect(
-                                          borderRadius: BorderRadius.circular(500.r),
+                                          borderRadius: BorderRadius.circular(300.r),
                                           child: Image.file(
                                             provider.targetImage!,
                                             fit: BoxFit.cover,
@@ -269,7 +269,7 @@ class _FaceSwapScreenState extends State<FaceSwapScreen> {
                                 );
                               }
                             ),
-
+                            vSpace(60.h),
                           ],
                         );
                       }

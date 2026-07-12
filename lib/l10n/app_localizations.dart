@@ -562,6 +562,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Credit never expire'**
   String get creditneveexpire;
+
+  /// No description provided for @surprise.
+  ///
+  /// In en, this message translates to:
+  /// **'Surprise'**
+  String get surprise;
+
+  /// No description provided for @surpriseme.
+  ///
+  /// In en, this message translates to:
+  /// **'Surprise me'**
+  String get surpriseme;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -226,4 +226,10 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get creditneveexpire => 'Kredit tidak akan luput';
+
+  @override
+  String get surprise => 'Surprise';
+
+  @override
+  String get surpriseme => 'Surprise me';
 }

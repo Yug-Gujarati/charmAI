@@ -226,4 +226,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get creditneveexpire => '积分永不过期';
+
+  @override
+  String get surprise => 'Surprise';
+
+  @override
+  String get surpriseme => 'Surprise me';
 }

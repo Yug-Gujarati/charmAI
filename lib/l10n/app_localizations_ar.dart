@@ -226,4 +226,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get creditneveexpire => 'الرصيد لا تنتهي صلاحيته أبدًا';
+
+  @override
+  String get surprise => 'Surprise';
+
+  @override
+  String get surpriseme => 'Surprise me';
 }

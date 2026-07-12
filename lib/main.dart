@@ -15,6 +15,7 @@ import 'package:charmai/view_model/hair_style_changer_provider.dart';
 import 'package:charmai/view_model/image_generation_provider.dart';
 import 'package:charmai/view_model/image_picker_provider.dart';
 import 'package:charmai/view_model/premium_provider_screen.dart';
+import 'package:charmai/view_model/subprise_provider.dart';
 import 'package:charmai/view_model/virtual_try_on_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -97,6 +98,9 @@ void main() async {
         ChangeNotifierProvider<PremiumProvider>(
           create: (_) => PremiumProvider(),
         ),
+        ChangeNotifierProvider<SubpriseProvider>(
+          create: (_) => SubpriseProvider(),
+        ),
 
       ],
       child: MyApp(initialLocale: locale),
@@ -168,9 +172,5 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-//yjndKrNpsvPkMcWVuoE8bwcbM4zIloSOGA52qtG7Tel3HUQHkA9t8LgzmYIixU5q
 
-
-// event proper karve badhe screen screen init state.
-// coin and premium na button text correction.
 

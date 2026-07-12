@@ -29,8 +29,8 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _screens = [
-    const HomeScreen(),
     const OptionsScreen(),
+    const HomeScreen(),
     const SavedImages(),
   ];
 
@@ -154,7 +154,10 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           Expanded(
             child: Stack(
               children: [
-                _screens[_selectedIndex],
+                IndexedStack(
+                  index: _selectedIndex,
+                  children: _screens,
+                ),
                 Positioned(
                   bottom: 10.h,
                   left: 20.w,

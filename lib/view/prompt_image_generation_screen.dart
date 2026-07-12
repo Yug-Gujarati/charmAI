@@ -116,7 +116,7 @@ class _PromptImageGenerationScreenState extends State<PromptImageGenerationScree
                                         ),
                                       ),
                                       child: Container(
-                                        height: 350.h,
+                                        height: 400.h,
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: Colors.black,
@@ -176,7 +176,7 @@ class _PromptImageGenerationScreenState extends State<PromptImageGenerationScree
                                         ),
                                       ),
                                       child: Container(
-                                        height: 350.h,
+                                        height: 400.h,
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: Colors.black,

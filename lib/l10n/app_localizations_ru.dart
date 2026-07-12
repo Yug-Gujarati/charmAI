@@ -226,4 +226,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get creditneveexpire => 'Кредиты никогда не истекают';
+
+  @override
+  String get surprise => 'Surprise';
+
+  @override
+  String get surpriseme => 'Surprise me';
 }
