@@ -1,6 +1,7 @@
 // import 'package:agingwonder/model/language_model.dart';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -23,7 +24,9 @@ showToast(msg) {
 }
 
 showLog(String msg) {
-  debugPrint("LOG >> $msg");
+  if (kDebugMode) {
+    debugPrint("LOG >> $msg");
+  }
 }
 
 Future<void> launchURL(url) async {

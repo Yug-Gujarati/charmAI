@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../ads/AppLifeReactor.dart';
 import '../ads/appOpenAdManager.dart';
+import '../utils/app_constants.dart';
 
 class ImagePickerProvider extends ChangeNotifier{
   File? _selectedImage;
@@ -44,7 +45,7 @@ class ImagePickerProvider extends ChangeNotifier{
       _appLifecycleReactor.listenToAppStateChanges(shouldShow: true);
       return false;
     } catch (e) {
-      debugPrint('Error picking image: $e');
+      showLog('Error picking image: $e');
       _appLifecycleReactor = AppLifecycleReactor(
         appOpenAdManager: appOpenAdManager,
       );
@@ -100,7 +101,7 @@ class ImagePickerProvider extends ChangeNotifier{
       }
       return null;
     } catch (e) {
-      debugPrint('Error cropping image: $e');
+      showLog('Error cropping image: $e');
       return null;
     }
   }

@@ -78,7 +78,7 @@ class InitializationHelper {
 ElevatedButton(
 onPressed: () async {
 final didChangePreferences = await _initializationHelper.changePrivacyPreferences();
-print('=====================$didChangePreferences========================');
+showLog('=====================$didChangePreferences========================');
 },
 child: const Text('re request'),
 ),*/

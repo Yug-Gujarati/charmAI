@@ -123,7 +123,7 @@ class ImageGenerationProvider extends ChangeNotifier {
       _appLifecycleReactor.listenToAppStateChanges(shouldShow: true);
       return false;
     } catch (e) {
-      debugPrint('Error picking image: $e');
+      showLog('Error picking image: $e');
       _appLifecycleReactor = AppLifecycleReactor(
         appOpenAdManager: appOpenAdManager,
       );
@@ -174,7 +174,7 @@ class ImageGenerationProvider extends ChangeNotifier {
       }
       return null;
     } catch (e) {
-      debugPrint('Error cropping image: $e');
+      showLog('Error cropping image: $e');
       return null;
     }
   }

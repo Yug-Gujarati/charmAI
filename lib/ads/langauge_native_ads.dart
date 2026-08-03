@@ -14,7 +14,7 @@
 //
 //   Future<NativeAd> loadFirstNative(String adUnitId, bool isSmallNative) async {
 //     showLog("isSmallNative--->$isSmallNative");
-//     print("LOAD FIRST NATIVE");
+//     showLog("LOAD FIRST NATIVE");
 //     isNativeAdLanguageLoaded.value = false;
 //     nativeLanguageAd = NativeAd(
 //       adUnitId: adUnitId.toString(),
@@ -135,7 +135,7 @@
 //         height: 0,
 //       );
 //     } else {
-//       print("this is ismall1 ${widget.isSmallNative}");
+//       showLog("this is ismall1 ${widget.isSmallNative}");
 //       return widget.isSmallNative ? const ShimmerSmallNative() : const ShimmerBigNative();
 //     }
 //   }
@@ -191,7 +191,7 @@
 //         height: 0,
 //       );
 //     } else {
-//       print("this is ismall ${widget.isSmallNative}");
+//       showLog("this is ismall ${widget.isSmallNative}");
 //       return widget.isSmallNative ? const ShimmerSmallNative() : const ShimmerBigNative();
 //     }
 //   }

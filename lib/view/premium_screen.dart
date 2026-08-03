@@ -87,7 +87,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
     WidgetsBinding.instance.addPostFrameCallback((callback) {
       fetchData();
       makeCloseVisible();
-      print("AppLifecycleReactor premium Should Show false");
+      showLog("AppLifecycleReactor premium Should Show false");
     });
     if (widget.isFromSplash) {
       FirebaseAnalyticsService.logEvent(
@@ -120,7 +120,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
 
         return packageEntry;
       } catch (e) {
-        print("Error retrieving package: $e");
+        showLog("Error retrieving package: $e");
         return null;
       }
     }
@@ -191,7 +191,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
       showLog("this is selected package $selectedPackage");
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        print(e);
+        showLog("$e");
       }
     }
     if (!mounted) return;
@@ -255,35 +255,35 @@ class _PremiumScreenState extends State<PremiumScreen> {
           backgroundColor: Color(0xFF1C1D25),
         );
         if (kDebugMode) {
-          print('User cancelled');
+          showLog('User cancelled');
         }
       } else if (errorCode == PurchasesErrorCode.purchaseNotAllowedError) {
         Fluttertoast.showToast(
           msg: AppLocalizations.of(context)?.youarenotallowed ??"You are not allowed to purchase",
           backgroundColor: Color(0xFF1C1D25),
         );
-        print("You are not allowed to purchase");
+        showLog("You are not allowed to purchase");
 
         if (kDebugMode) {
           Fluttertoast.showToast(
             msg: AppLocalizations.of(context)?.usernotallowed ?? "User not allowed to purchase",
             backgroundColor: Color(0xFF1C1D25),
           );
-          print('User not allowed to purchase');
+          showLog('User not allowed to purchase');
         }
       } else if (errorCode == PurchasesErrorCode.paymentPendingError) {
         Fluttertoast.showToast(
           msg: AppLocalizations.of(context)?.paymentispending ??"Payment is Pending",
           backgroundColor: Color(0xFF1C1D25),
         );
-        print("Payment is Pending");
+        showLog("Payment is Pending");
 
         if (kDebugMode) {
           Fluttertoast.showToast(
             msg: AppLocalizations.of(context)?.paymentispending ??"Payment is pending",
             backgroundColor: Color(0xFF1C1D25),
           );
-          print('Payment is pending');
+          showLog('Payment is pending');
         }
       }
     }
@@ -313,8 +313,8 @@ class _PremiumScreenState extends State<PremiumScreen> {
         msg: "Your plan subscribe successfully",
         backgroundColor: Color(0xFF1C1D25),
       );
-      print('Your plan subscribed successfully with bonus coins!');
-      print('Your plan subscribe successfully');
+      showLog('Your plan subscribed successfully with bonus coins!');
+      showLog('Your plan subscribe successfully');
       final prefs = await SharedPreferences.getInstance();
       bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
       if (widget.isFromSplash == true || isFirstLaunch) {
@@ -337,7 +337,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
         msg: "Failed To Purchase",
         backgroundColor: Color(0xFF1C1D25),
       );
-      print('Failed To Purchase');
+      showLog('Failed To Purchase');
     }
   }
 
@@ -354,10 +354,10 @@ class _PremiumScreenState extends State<PremiumScreen> {
 
   Future<bool> isFreeTrialOnPackage(Package package) async {
     if (package.storeProduct.introductoryPrice != null) {
-      print("CURRENT PLAN HAS FREE TRIAL");
-      print("TRIAL PACKAGE IS $package");
+      showLog("CURRENT PLAN HAS FREE TRIAL");
+      showLog("TRIAL PACKAGE IS $package");
     } else {
-      print("NO FREE TRIAL FOUND");
+      showLog("NO FREE TRIAL FOUND");
     }
     final StoreProduct product = package.storeProduct;
 
@@ -368,17 +368,17 @@ class _PremiumScreenState extends State<PremiumScreen> {
 
     IntroEligibility? eligibility = eligibilityMap[product.identifier];
 
-    print("eligible status ${eligibility?.status}");
+    showLog("eligible status ${eligibility?.status}");
 
     if (eligibility?.status ==
         IntroEligibilityStatus.introEligibilityStatusEligible) {
-      print("User is eligible for a trial or introductory offer.");
+      showLog("User is eligible for a trial or introductory offer.");
       return true;
     } else if (eligibility?.status ==
         IntroEligibilityStatus.introEligibilityStatusIneligible) {
-      print("User is not eligible for a trial or introductory offer.");
+      showLog("User is not eligible for a trial or introductory offer.");
     } else {
-      print("Unknown eligibility for a trial or introductory offer.");
+      showLog("Unknown eligibility for a trial or introductory offer.");
     }
     return false;
   }
@@ -389,10 +389,10 @@ class _PremiumScreenState extends State<PremiumScreen> {
 
   Future<String> getIntroductoryPriceOnPackage(Package package) async {
     if (package.storeProduct.introductoryPrice != null) {
-      print("CURRENT PLAN HAS FREE TRIAL");
-      print("TRIAL PACKAGE IS $package");
+      showLog("CURRENT PLAN HAS FREE TRIAL");
+      showLog("TRIAL PACKAGE IS $package");
     } else {
-      print("NO FREE TRIAL FOUND");
+      showLog("NO FREE TRIAL FOUND");
     }
     final StoreProduct product = package.storeProduct;
 
@@ -403,17 +403,17 @@ class _PremiumScreenState extends State<PremiumScreen> {
 
     IntroEligibility? eligibility = eligibilityMap[product.identifier];
 
-    print("eligible status ${eligibility?.status}");
+    showLog("eligible status ${eligibility?.status}");
 
     if (eligibility?.status ==
         IntroEligibilityStatus.introEligibilityStatusEligible) {
-      print("User is eligible for a trial or introductory offer.");
+      showLog("User is eligible for a trial or introductory offer.");
       return package.storeProduct.introductoryPrice!.priceString;
     } else if (eligibility?.status ==
         IntroEligibilityStatus.introEligibilityStatusIneligible) {
-      print("User is not eligible for a trial or introductory offer.");
+      showLog("User is not eligible for a trial or introductory offer.");
     } else {
-      print("Unknown eligibility for a trial or introductory offer.");
+      showLog("Unknown eligibility for a trial or introductory offer.");
     }
     return '';
   }
@@ -499,7 +499,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
             visible: !(widget.from == "home" || widget.isFromSplash),
             child: TextButton(
               onPressed: () {
-                print("this is testter method");
+                showLog("this is testter method");
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -812,7 +812,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
     final perWeekPrice = myIndex == 1
         ? ((packageEntry.storeProduct.price ?? 0) / 52).toStringAsFixed(2)
         : packageEntry.storeProduct.price.toStringAsFixed(2);
-    print("PER WEEK $perWeekPrice");
+    showLog("PER WEEK $perWeekPrice");
 
     String introductoryPrice = "0";
 

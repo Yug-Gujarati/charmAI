@@ -7,6 +7,7 @@ import '../ads/AdsVariable.dart';
 import '../ads/ads_loading_util.dart';
 import '../ads/analytics_service.dart';
 import '../l10n/app_localizations.dart';
+import '../utils/app_constants.dart';
 import '../utils/custom_appbar.dart';
 import '../utils/custom_text.dart';
 import '../utils/custome_buttom.dart';
@@ -38,7 +39,7 @@ class _IntroScreenState extends State<IntroScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      print("this is native ad $_isNativeAdLoaded");
+      showLog("this is native ad $_isNativeAdLoaded");
       _checkFirstLaunch();
     });
 
@@ -55,9 +56,9 @@ class _IntroScreenState extends State<IntroScreen> {
     int? updatedCoins = await context.read<CoinProvider>().getCoins(deviceId);
 
     if (updatedCoins != null) {
-      print("User awarded $updatedCoins credits for first launch.");
+      showLog("User awarded $updatedCoins credits for first launch.");
     } else {
-      print("Failed to fetch the updated coins for the user.");
+      showLog("Failed to fetch the updated coins for the user.");
     }
   }
 

@@ -1,5 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 
+import '../utils/app_constants.dart';
+
 class FirebaseAnalyticsService {
   static final FirebaseAnalytics
   analytics = FirebaseAnalytics.instance;
@@ -20,7 +22,7 @@ class FirebaseAnalyticsService {
         parameters: parameters,
       );
     } catch (e) {
-      print("Error logging event: $e");
+      showLog("Error logging event: $e");
     }
   }
 }

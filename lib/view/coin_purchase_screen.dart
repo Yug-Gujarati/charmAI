@@ -77,7 +77,7 @@ class _CoinPurchaseState extends State<CoinPurchase> {
       fetchData();
       makeCloseVisible();
 
-      print("AppLifecycleReactor premium Should Show false");
+      showLog("AppLifecycleReactor premium Should Show false");
     });
 
     FirebaseAnalyticsService.logEvent(eventName: "CA_COIN_PURCHASE_SCREEN");
@@ -104,7 +104,7 @@ class _CoinPurchaseState extends State<CoinPurchase> {
 
         return packageEntry;
       } catch (e) {
-        print("Error retrieving package: $e");
+        showLog("Error retrieving package: $e");
         return null;
       }
     }
@@ -117,7 +117,7 @@ class _CoinPurchaseState extends State<CoinPurchase> {
 
     try {
       final products = await Purchases.getProducts(["test"]);
-      print("this is lis of product $products");
+      showLog("this is lis of product $products");
       offerings = await Purchases.getOfferings();
       firstCreditPackage = offerings.current!.availablePackages
           .where((test) =>
@@ -137,13 +137,13 @@ class _CoinPurchaseState extends State<CoinPurchase> {
           package.identifier: package
       };
 
-      print("First Plan : ${firstCreditPackage}");
-      print("Second Plan : ${secondCreditPackage}");
+      showLog("First Plan : ${firstCreditPackage}");
+      showLog("Second Plan : ${secondCreditPackage}");
 
-     // printJson(offerings.toJson());
+     // showLogJson(offerings.toJson());
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        print(e);
+        showLog("$e");
       }
     }
     if (!mounted) return;
@@ -153,12 +153,12 @@ class _CoinPurchaseState extends State<CoinPurchase> {
   }
 
   //For iOS
-  // void printJson(Map<String, dynamic>? json, [int indentation = 0]) {
+  // void showLogJson(Map<String, dynamic>? json, [int indentation = 0]) {
   //   json?.forEach((key, value) {
-  //     print("this is json data");
-  //     print('${' ' * indentation}$key: $value');
+  //     showLog("this is json data");
+  //     showLog('${' ' * indentation}$key: $value');
   //     if (value is Map<String, dynamic>) {
-  //       printJson(value, indentation + 2);
+  //       showLogJson(value, indentation + 2);
   //     }
   //   });
   // }
@@ -208,35 +208,35 @@ class _CoinPurchaseState extends State<CoinPurchase> {
           backgroundColor: Color(0xFF1C1D25),
         );
         if (kDebugMode) {
-          print('User cancelled');
+          showLog('User cancelled');
         }
       } else if (errorCode == PurchasesErrorCode.purchaseNotAllowedError) {
         Fluttertoast.showToast(
           msg: "You are not allowed to purchase",
           backgroundColor: Color(0xFF1C1D25),
         );
-        print("You are not allowed to purchase");
+        showLog("You are not allowed to purchase");
 
         if (kDebugMode) {
           Fluttertoast.showToast(
             msg: "User not allowed to purchase",
             backgroundColor: Color(0xFF1C1D25),
           );
-          print('User not allowed to purchase');
+          showLog('User not allowed to purchase');
         }
       } else if (errorCode == PurchasesErrorCode.paymentPendingError) {
         Fluttertoast.showToast(
           msg: "Payment is Pending",
           backgroundColor: Color(0xFF1C1D25),
         );
-        print("Payment is Pending");
+        showLog("Payment is Pending");
 
         if (kDebugMode) {
           Fluttertoast.showToast(
             msg: "Payment is pending",
             backgroundColor: Color(0xFF1C1D25),
           );
-          print('Payment is pending');
+          showLog('Payment is pending');
         }
       }
     }
@@ -265,8 +265,8 @@ class _CoinPurchaseState extends State<CoinPurchase> {
         msg: "Your plan subscribe successfully",
         backgroundColor: Color(0xFF1C1D25),
       );
-      print('Your plan subscribed successfully with bonus coins!');
-      print('Your plan subscribe successfully');
+      showLog('Your plan subscribed successfully with bonus coins!');
+      showLog('Your plan subscribe successfully');
       final prefs = await SharedPreferences.getInstance();
       bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
       if (widget.isFromSplash == true && isFirstLaunch) {
@@ -287,7 +287,7 @@ class _CoinPurchaseState extends State<CoinPurchase> {
         msg: "Failed To Purchase",
         backgroundColor: Color(0xFF1C1D25),
       );
-      print('Failed To Purchase');
+      showLog('Failed To Purchase');
     }
   }
 

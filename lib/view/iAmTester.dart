@@ -171,8 +171,8 @@ class _IamtestrPageState extends State<Iamtestr> {
                   width: 600.w,
                   image: "assets/intro/next_pressed.png",
                   onTap: () async {
-                    print(AdsVariable.ca_tester_email );
-                    print(AdsVariable.ca_tester_password);
+                    showLog(AdsVariable.ca_tester_email );
+                    showLog(AdsVariable.ca_tester_password);
                     var result = await checkInternetConnectivity(context);
                     if (result) {
                       if (userId.value.isNotEmpty &&

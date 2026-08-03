@@ -12,6 +12,7 @@ import '../ads/analytics_service.dart';
 
 import '../l10n/app_localizations.dart';
 import '../main.dart';
+import '../utils/app_constants.dart';
 import '../utils/custom_text.dart';
 import '../utils/custome_buttom.dart';
 import '../utils/theme.dart';
@@ -34,7 +35,7 @@ class _LanguagePageState extends State<LanguagePage> {
   Future<void> _checkFirstLaunch() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool firstLaunch = prefs.getBool('isFirstLaunch') ?? true;
-    print("language page isFirstLaunch $isFirstLaunch");
+    showLog("language page isFirstLaunch $isFirstLaunch");
 
     setState(() {
       isFirstLaunch = firstLaunch;
@@ -61,15 +62,15 @@ class _LanguagePageState extends State<LanguagePage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
 
-      log("this is native ad ${AdsVariable.languageAd}");
-      log("this is is from home ${widget.isFromHomeScreen}");
+      showLog("this is native ad ${AdsVariable.languageAd}");
+      showLog("this is is from home ${widget.isFromHomeScreen}");
 
       if (AdsVariable.languageAd == null && widget.isFromHomeScreen == true) {
-        print("Language is null");
+        showLog("Language is null");
         AdsVariable.languageAd = await AdsLoadUtil().loadNative(AdsVariable.ca_language_nativeAd, false);
-        print("first Language is null after");
+        showLog("first Language is null after");
       } else {
-        print("Language is not null");
+        showLog("Language is not null");
       }
       setState(() {
 
@@ -88,7 +89,7 @@ class _LanguagePageState extends State<LanguagePage> {
     AdsVariable.languageAd = null;
     AdsLoadUtil.isNativeAdLoaded.value = false;
 
-    print("Call Dispose");
+    showLog("Call Dispose");
     super.dispose();
   }
 
@@ -103,7 +104,7 @@ class _LanguagePageState extends State<LanguagePage> {
   Future<void> _initializeLanguageSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool firstLaunch = prefs.getBool('isFirstLaunch') ?? true;
-    print("language page $isFirstLaunch");
+    showLog("language page $isFirstLaunch");
 
     setState(() {
       isFirstLaunch = firstLaunch;
@@ -405,10 +406,10 @@ class _LanguagePageState extends State<LanguagePage> {
                                     final localeCode =
                                     _languageCodes[_selectedLanguage!];
                                     _changeLanguage(localeCode!);
-                                    print(
+                                    showLog(
                                         'Selected Language Codes: $localeCode');
                                   } else {
-                                    print('No language selected');
+                                    showLog('No language selected');
                                   }
                                 },
                                 child: Container(),

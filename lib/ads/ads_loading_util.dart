@@ -51,16 +51,16 @@ class AdsLoadUtil extends GetxController {
       adLoadCallback: AppOpenAdLoadCallback(
         onAdLoaded: (ad) async {
           await loadPreLoadAds();
-          print(
+          showLog(
             "Ad Loaded:=====================================================================",
           );
           ad.show();
           ad.fullScreenContentCallback = FullScreenContentCallback(
             onAdShowedFullScreenContent: (ad) {
-              print('Ad showed full screen content');
+              showLog('Ad showed full screen content');
             },
             onAdFailedToShowFullScreenContent: (ad, error) {
-              print('$ad onAdFailedToShowFullScreenContent=======:- $error');
+              showLog('$ad onAdFailedToShowFullScreenContent=======:- $error');
               AdsVariable.isShowingAd = false;
 
               Future.delayed(const Duration(seconds: 3), () {
@@ -80,7 +80,7 @@ class AdsLoadUtil extends GetxController {
                 appOpenAdManager: appOpenAdManager,
               );
               lifecycleReactor.listenToAppStateChanges(shouldShow: true);
-              print('$ad onAdDismissedFullScreenContent========:-');
+              showLog('$ad onAdDismissedFullScreenContent========:-');
             },
           );
         },
@@ -90,10 +90,10 @@ class AdsLoadUtil extends GetxController {
           Future.delayed(const Duration(seconds: 3), () {
             onDismissed();
           });
-          print(
+          showLog(
             "Ad Not Loaded:=====================================================================",
           );
-          print(error);
+          showLog("$error");
         },
       ),
     );
@@ -109,17 +109,17 @@ class AdsLoadUtil extends GetxController {
         request: const AdRequest(),
         adLoadCallback: AppOpenAdLoadCallback(
           onAdLoaded: (ad) async {
-            print(
+            showLog(
               "Ad Loaded:=====================================================================",
             );
             ad.show();
             ad.fullScreenContentCallback = FullScreenContentCallback(
               onAdShowedFullScreenContent: (ad) {
                 openAdOpenAdLoadingScreen.hide();
-                print('Ad showed full screen content');
+                showLog('Ad showed full screen content');
               },
               onAdFailedToShowFullScreenContent: (ad, error) {
-                print('$ad onAdFailedToShowFullScreenContent=======:- $error');
+                showLog('$ad onAdFailedToShowFullScreenContent=======:- $error');
                 openAdOpenAdLoadingScreen.hide();
                 AdsVariable.isShowingAd = false;
               },
@@ -132,7 +132,7 @@ class AdsLoadUtil extends GetxController {
                   appOpenAdManager: appOpenAdManager,
                 );
                 lifecycleReactor.listenToAppStateChanges(shouldShow: true);
-                print('$ad onAdDismissedFullScreenContent========:-');
+                showLog('$ad onAdDismissedFullScreenContent========:-');
               },
             );
           },
@@ -140,17 +140,17 @@ class AdsLoadUtil extends GetxController {
             AdsVariable.isShowingAd = false;
 
             openAdOpenAdLoadingScreen.hide();
-            print(
+            showLog(
               "Ad Not Loaded:=====================================================================",
             );
-            print(error);
+            showLog("$error");
           },
         ),
       );
     } catch (e) {
       openAdOpenAdLoadingScreen.hide();
       AdsVariable.isShowingAd = false;
-      print("ERROR IN LOAD AND SHOW OPEN AD $e");
+      showLog("ERROR IN LOAD AND SHOW OPEN AD $e");
     }
   }
 
@@ -181,7 +181,7 @@ class AdsLoadUtil extends GetxController {
         ),
       );
     } catch (e) {
-      print("ERROR IN LOAD PRE INTERSTITIAL AD $e");
+      showLog("ERROR IN LOAD PRE INTERSTITIAL AD $e");
     }
   }
 
@@ -248,7 +248,7 @@ class AdsLoadUtil extends GetxController {
   ) async {
     prefs = await SharedPreferences.getInstance();
     showLog('>> SHOW INTER CALL <<');
-    print('>> SHOW INTER CALL <<');
+    showLog('>> SHOW INTER CALL <<');
     showLog(
       'AdsVariable.appOpenSplashIOS >>${AdsVariable.ca_pre_interstitialAd}',
     );
@@ -260,7 +260,7 @@ class AdsLoadUtil extends GetxController {
         adLoadCallback: InterstitialAdLoadCallback(
           // Called when an ad is successfully received.
           onAdLoaded: (ad) async {
-            print("AD LOADED");
+            showLog("AD LOADED");
 
             splashInterAd = ad;
             splashInterAd!.show();
@@ -273,12 +273,12 @@ class AdsLoadUtil extends GetxController {
               // Called when the ad showed the full screen content.
               onAdShowedFullScreenContent: (ad) async {
                 showLog("onAdShowedFullScreenContent loadInterSplash");
-                print("onAdShowedFullScreenContent loadInterSplash");
+                showLog("onAdShowedFullScreenContent loadInterSplash");
               },
               // Called when an impression occurs on the ad.
               onAdImpression: (ad) async {
                 showLog("onAdImpression loadInterSplash");
-                print("onAdImpression loadInterSplash");
+                showLog("onAdImpression loadInterSplash");
                 Future.delayed(const Duration(milliseconds: 500)).then((value) {
                   navigateScreen();
                 });
@@ -291,7 +291,7 @@ class AdsLoadUtil extends GetxController {
                 ad.dispose();
 
                 showLog("onAdFailedToShowFullScreenContent loadInterSplash");
-                print("onAdFailedToShowFullScreenContent loadInterSplash");
+                showLog("onAdFailedToShowFullScreenContent loadInterSplash");
               },
               // Called when the ad dismissed full screen content.
               onAdDismissedFullScreenContent: (ad) async {
@@ -317,7 +317,7 @@ class AdsLoadUtil extends GetxController {
           // Called when an ad request failed.
           onAdFailedToLoad: (LoadAdError error) async {
             showLog('InterstitialAd failed to load loadInterSplash: $error');
-            print('InterstitialAd failed to load loadInterSplash: $error');
+            showLog('InterstitialAd failed to load loadInterSplash: $error');
             await loadPreLoadAds();
             Future.delayed(Duration(seconds: 3), () {
               navigateScreen();
@@ -363,7 +363,7 @@ class AdsLoadUtil extends GetxController {
                     },
                     onAdDismissedFullScreenContent: (ad) {
                       ad.dispose();
-                      print("Ad Reloaded");
+                      showLog("Ad Reloaded");
                       AdsVariable.isShowingAd = false;
                       loadPreInterstitialAd(
                         adId: AdsVariable.ca_pre_interstitialAd,
@@ -373,7 +373,7 @@ class AdsLoadUtil extends GetxController {
                       AdsVariable.isShowingAd = false;
 
                       ad.dispose();
-                      print("Ad Reloaded");
+                      showLog("Ad Reloaded");
                       loadPreInterstitialAd(
                         adId: AdsVariable.ca_pre_interstitialAd,
                       );
@@ -392,7 +392,7 @@ class AdsLoadUtil extends GetxController {
       } catch (e) {
         loadingScreen.hide();
         AdsVariable.isShowingAd = false;
-        print("ERROR IN LOAD AND SHOW $e");
+        showLog("ERROR IN LOAD AND SHOW $e");
       }
     }
   }
@@ -423,13 +423,13 @@ class AdsLoadUtil extends GetxController {
               ad.dispose();
               AdsVariable.isShowingAd = false;
 
-              print("Ad Reloaded");
+              showLog("Ad Reloaded");
             },
             onAdFailedToShowFullScreenContent: (ad, error) {
               ad.dispose();
               AdsVariable.isShowingAd = false;
 
-              print("Ad Reloaded");
+              showLog("Ad Reloaded");
 
               onDismissed();
             },
@@ -585,7 +585,7 @@ class AdsLoadUtil extends GetxController {
     try {
       await nativeAd!.load();
     } catch (e) {
-      print("ERROR IN LOAD NATIVE AD $e");
+      showLog("ERROR IN LOAD NATIVE AD $e");
       nativeAd!.dispose();
       nativeAd = null;
       isNativeAdLoaded.value = false;
@@ -623,7 +623,7 @@ class AdsLoadUtil extends GetxController {
   //   try {
   //     await secondNativeAd!.load();
   //   } catch (e) {
-  //     print("ERROR IN LOAD NATIVE AD $e");
+  //     showLog("ERROR IN LOAD NATIVE AD $e");
   //     secondNativeAd!.dispose();
   //     secondNativeAd = null;
   //     isSecondNativeAdLoaded.value = false;
@@ -665,13 +665,13 @@ class AdsLoadUtil extends GetxController {
       return nativeIntroAd!;
     } else {
       showLog("this is native ad failed ${isNativeIntroAdFailed.value}");
-      print("outtttt");
+      showLog("outtttt");
       return nativeIntroAd!;
     }
     // try {
     //   await nativeIntroAd!.load();
     // } catch (e) {
-    //   print("ERROR IN LOAD NATIVE AD $e");
+    //   showLog("ERROR IN LOAD NATIVE AD $e");
     //   nativeIntroAd!.dispose();
     //   nativeIntroAd = null;
     //   isNativeIntroAdLoaded.value = false;
@@ -711,7 +711,7 @@ class AdsLoadUtil extends GetxController {
     try {
       await homeNativeAd!.load();
     } catch (e) {
-      print("ERROR IN LOAD NATIVE AD $e");
+      showLog("ERROR IN LOAD NATIVE AD $e");
       homeNativeAd!.dispose();
       homeNativeAd = null;
       ishomeNativeAdLoaded.value = false;

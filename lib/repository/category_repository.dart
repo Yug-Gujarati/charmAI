@@ -2,6 +2,7 @@ import 'package:charmai/services/firebase_storage_service.dart';
 
 import '../ads/AdsVariable.dart';
 import '../models/category_model.dart';
+import '../utils/app_constants.dart';
 
 class CategoryRepository {
   final firebaseService = FirebaseStorageService();
@@ -14,11 +15,11 @@ class CategoryRepository {
       final storedVersion = await AdsVariable.getVersion();
 
       if (jsonVersion != null && storedVersion != jsonVersion) {
-        print("new json version detected");
+        showLog("new json version detected");
         await AdsVariable.saveVersion(jsonVersion);
       }
       if (json["categories"] == null) {
-        print("ERROR: categories missing in JSON");
+        showLog("ERROR: categories missing in JSON");
         return [];
       }
 
@@ -37,7 +38,7 @@ class CategoryRepository {
 
       return categories;
     } catch (e) {
-      print("CRITICAL ERROR in getCategories: $e");
+      showLog("CRITICAL ERROR in getCategories: $e");
       return [];
     }
   }

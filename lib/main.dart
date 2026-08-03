@@ -127,7 +127,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    print("this is main screen log");
+    showLog("this is main screen log");
     super.initState();
     _locale = widget.initialLocale;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {

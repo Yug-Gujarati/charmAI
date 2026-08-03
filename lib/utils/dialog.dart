@@ -77,10 +77,10 @@ class DialogService {
       context: context,
       barrierDismissible: false,
       builder: (dialogContext) => Dialog(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Container(
-          height: 500.h,
+          height: 550.h,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/change_hair_style/popup.png"),
@@ -116,7 +116,7 @@ class DialogService {
                   textColor: AppColors.primaryText,
                   align: TextAlign.center,
                   width: 600,
-                  maxline: 2,
+                  maxline: 3,
                 ),
 
                 SizedBox(height: 40.h),

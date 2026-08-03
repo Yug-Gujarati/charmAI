@@ -42,7 +42,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
     return Container(
       color: AppColors.mainAppBackground,
       child: Padding(
-        padding: EdgeInsets.only(left: 50.w, right: 50.w),
+        padding: EdgeInsets.only(left: 50.w, right: 50.w,),
         child: Column(
           children: [
             CustomeButtomWithImage(
@@ -86,7 +86,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
             Expanded(
               child: GridView.builder(
                 primary: false,
-                padding: EdgeInsets.zero,
+                padding: EdgeInsets.only(bottom: 200.h),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 15, mainAxisSpacing: 5, childAspectRatio: 0.9),
                 itemCount: tools.length,
                 itemBuilder: (context, index) {
@@ -94,6 +94,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
                 },
               ),
             ),
+
           ],
         ),
       ),

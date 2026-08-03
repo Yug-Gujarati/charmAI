@@ -110,8 +110,6 @@ class AdsVariable {
   }
 
 
-
-
   static void setAdIdsFromLocal() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -120,7 +118,6 @@ class AdsVariable {
     prefs.setString("ca_normal_openAd", ca_normal_openAd);
     prefs.setString("ca_language_nativeAd", ca_language_nativeAd);
     prefs.setString("ca_full_nativeAd", ca_full_nativeAd);
-
     prefs.setString("ca_rewardedAd", ca_rewardedAd);
     prefs.setInt("ca_free_coin", ca_free_coin);
 

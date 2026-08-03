@@ -25,7 +25,7 @@ import 'ads_loading_util.dart';
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print("Background message: ${message.notification?.title}");
+  showLog("Background message: ${message.notification?.title}");
 }
 
 class AdsSplashUtils {
@@ -35,7 +35,7 @@ class AdsSplashUtils {
     required Function() preLoads,
     required Function() navigateScreen,
   }) async {
-    log("In Get Ads");
+    showLog("In Get Ads");
     prefs = await SharedPreferences.getInstance();
 
     premiumInit();
@@ -57,7 +57,7 @@ class AdsSplashUtils {
             /// add this line to enable firebase crashlytics
             FlutterError.onError =
                 FirebaseCrashlytics.instance.recordFlutterFatalError;
-            log("Firebase Initialized");
+            showLog("Firebase Initialized");
           });
           final remoteConfig = FirebaseRemoteConfig.instance;
           await remoteConfig.setConfigSettings(
@@ -78,7 +78,7 @@ class AdsSplashUtils {
           Map<String, dynamic> mapValues1 = jsonDecode(
             remoteConfig.getValue("charm_ai").asString(),
           );
-          showLog("map is $mapValues1");
+         // showLog("map is $mapValues1");
 
           showLog("this is 1");
 
@@ -109,7 +109,7 @@ class AdsSplashUtils {
           showLog("this is 5");
 
           AdsVariable.ca_free_coin = mapValues1["ca_free_coin"];
-          print("this is in splash util ${AdsVariable.ca_free_coin}");
+          showLog("this is in splash util ${AdsVariable.ca_free_coin}");
 
           AdsVariable.ca_click = mapValues1["ca_click"];
           AdsVariable.ca_gemini_api_key = mapValues1["ca_gemini_api_key"];
@@ -169,7 +169,7 @@ class AdsSplashUtils {
           showLog("Exception is $exception");
         }
       } else {
-        print("Not Connected");
+        showLog("Not Connected");
 
         Future.delayed(Duration(seconds: 3), () {
           navigateScreen();
@@ -178,7 +178,7 @@ class AdsSplashUtils {
         /// Facebook id setup
       }
     } catch (e) {
-      print(e);
+      showLog("$e");
       Future.delayed(Duration(seconds: 3), () {
         navigateScreen();
       });
@@ -188,7 +188,7 @@ class AdsSplashUtils {
   fetchPurchase() async {
     try {
       final customerInfo = await Purchases.getCustomerInfo();
-      print("CUSTOMER INFO $customerInfo");
+      showLog("CUSTOMER INFO $customerInfo");
       if (customerInfo.entitlements.all[entitlementKey] != null &&
           customerInfo.entitlements.all[entitlementKey]!.isActive == true) {
         GlobalVariables.isPremiumUser = true;
@@ -223,7 +223,7 @@ class AdsSplashUtils {
         onDismiss();
       }
     } catch (e) {
-      print("ERROR is $e");
+      showLog("ERROR is $e");
       onDismiss();
     }
     AdsVariable.current_click++;
@@ -336,11 +336,11 @@ Future<TrackingStatus> initializeWithOutGDPR() async {
   AppTrackingTransparency.requestTrackingAuthorization().then((value) async {
     final status = await AppTrackingTransparency.trackingAuthorizationStatus;
     if (status == TrackingStatus.authorized) {
-      print("GDPR: TrackingStatus.required");
+      showLog("GDPR: TrackingStatus.required");
       await initializeMobileAds();
       completer.complete(TrackingStatus.authorized);
     } else {
-      print("GDPR: TrackingStatus Not Required");
+      showLog("GDPR: TrackingStatus Not Required");
       await initializeMobileAds();
       completer.complete(TrackingStatus.denied);
     }

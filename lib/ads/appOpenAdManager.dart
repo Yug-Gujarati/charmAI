@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import '../utils/app_constants.dart';
 import '../utils/globalVariables.dart';
 import 'AdsVariable.dart';
 
@@ -37,7 +38,7 @@ class AppOpenAdManager {
           log('${AdsVariable.appOpenAdInstance} appOpen loaded');
         },
         onAdFailedToLoad: (error) {
-          print('AppOpenAd failed to load: $error');
+          showLog('AppOpenAd failed to load: $error');
         },
       ),
     );
@@ -58,27 +59,27 @@ class AppOpenAdManager {
     }
     if (!isAdAvailable) {
       loadAd(adId);
-      print('Tried to show ad before available.');
+      showLog('Tried to show ad before available.');
       return;
     }
     if (AdsVariable.isShowingAd) {
-      print('Tried to show ad while already showing an ad.');
+      showLog('Tried to show ad while already showing an ad.');
       return;
     }
     // if (DateTime.now().subtract(maxCacheDuration).isAfter(_appOpenLoadTime!)) {
     //   loadAd(adId);
-    //   print('Maximum cache duration exceeded. Loading another ad.');
+    //   showLog('Maximum cache duration exceeded. Loading another ad.');
     //   return;
     // }
     AdsVariable.appOpenAdInstance!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (ad) {
         AdsVariable.isShowingAd = true;
-        print('$ad onAdShowedFullScreenContent');
+        showLog('$ad onAdShowedFullScreenContent');
         log("FullScreenContentCallback");
       },
       onAdFailedToShowFullScreenContent: (ad, error) {
         Get.back();
-        print('$ad onAdFailedToShowFullScreenContent: $error');
+        showLog('$ad onAdFailedToShowFullScreenContent: $error');
         AdsVariable.isShowingAd = false;
         ad.dispose();
         AdsVariable.appOpenAdInstance = null;
@@ -88,7 +89,7 @@ class AppOpenAdManager {
       },
       onAdDismissedFullScreenContent: (ad) {
         Get.back();
-        print('$ad onAdDismissedFullScreenContent');
+        showLog('$ad onAdDismissedFullScreenContent');
         AdsVariable.isShowingAd = false;
         ad.dispose();
         AdsVariable.appOpenAdInstance = null;

@@ -36,6 +36,8 @@ class _SubpriseScreenState extends State<SubpriseScreen> {
     // TODO: implement initState
     _fetchCoins();
     FirebaseAnalyticsService.logEvent(eventName: "CA_SURPRISE_IMAGE");
+   // showLog("ai lab api ${AdsVariable.ca_ai_lab_tool_api}");
+  //  showLog('gemini api ${AdsVariable.ca_gemini_api_key}');
 
     super.initState();
   }

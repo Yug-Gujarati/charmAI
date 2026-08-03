@@ -31,13 +31,13 @@ class AppLifecycleReactor {
   void onAppStateChanged(AppState appState) {
     showLog("In ON APP STATE CHANGED");
     if (appState == AppState.foreground) {
-      debugPrint("App State :- $appState");
+      showLog("App State :- $appState");
       showLog('FOREGROUND');
 
       // appOpenAdManager.showAdIfAvailable(AdsVariable.appOpenAd);
       AdsLoadUtil().loadAndShowOpenAd(AdsVariable.ca_normal_openAd);
     } else if (appState == AppState.background) {
-      print(AdsVariable.ca_normal_openAd);
+      showLog(AdsVariable.ca_normal_openAd);
       ///TODO: CHANGES
       showLog('BACKGROUND');
 

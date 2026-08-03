@@ -14,6 +14,7 @@ import '../ads/AppLifeReactor.dart';
 import '../ads/analytics_service.dart';
 import '../ads/appOpenAdManager.dart';
 import '../l10n/app_localizations.dart';
+import '../utils/app_constants.dart';
 import '../utils/constant.dart';
 import '../utils/custom_appbar.dart';
 import '../utils/globalVariables.dart';
@@ -57,7 +58,7 @@ class _SettingPageState extends State<SettingPage> {
         appStoreId: iosAppId,
       ); // Replace with your iOS app ID
     } catch (e) {
-      print('Error requesting in-app review: $e');
+      showLog('Error requesting in-app review: $e');
     }
   }
 
@@ -70,7 +71,7 @@ class _SettingPageState extends State<SettingPage> {
     if (Platform.isIOS) {
       final PackageInfo packageInfo = await PackageInfo.fromPlatform();
       final String packageName = packageInfo.packageName;
-      print(packageName);
+      showLog(packageName);
       if (Platform.isIOS) {
         final String url = 'https://apps.apple.com/app/id$iosAppId';
         Share.share(url);
@@ -82,7 +83,7 @@ class _SettingPageState extends State<SettingPage> {
     } else if (Platform.isAndroid) {
       final PackageInfo packageInfo = await PackageInfo.fromPlatform();
       final String packageName = packageInfo.packageName;
-      print(packageName);
+      showLog(packageName);
       if (Platform.isIOS) {
         final String url = 'https://apps.apple.com/app/id$iosAppId';
         Share.share(url);

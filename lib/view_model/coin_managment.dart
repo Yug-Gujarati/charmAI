@@ -43,7 +43,7 @@ class CoinProvider extends ChangeNotifier {
 
       return storedUuid; // Return the existing UUID
     } catch (e) {
-      print('Error fetching random ID: $e');
+      showLog('Error fetching random ID: $e');
       return _uuidGenerator.v4(); // Generate a fallback UUID
     }
   }
@@ -58,11 +58,11 @@ class CoinProvider extends ChangeNotifier {
       _coins = AdsVariable.ca_free_coin;
       await saveCoins(randomId, AdsVariable.ca_free_coin);
 
-      print(
+      showLog(
           'New store created for $randomId with ${AdsVariable.ca_free_coin} coins.');
     } else {
       _coins = existingCoins;
-      print('Store already exists for $randomId with $existingCoins coins.');
+      showLog('Store already exists for $randomId with $existingCoins coins.');
     }
     notifyListeners();
   }
@@ -85,7 +85,7 @@ class CoinProvider extends ChangeNotifier {
       coins = int.tryParse(value ?? "0") ?? 0;
       return value != null ? int.tryParse(value) : null;
     } catch (e) {
-      print('Error reading coins for $randomId: $e');
+      showLog('Error reading coins for $randomId: $e');
       return null;
     }
   }
