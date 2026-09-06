@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:charmai/utils/report_bottom_sheet.dart';
 import 'package:charmai/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +17,8 @@ class CustomAppbar extends StatelessWidget {
   final Function onTap;
   final String name;
   final bool showPremium;
-  const CustomAppbar({super.key, required this.onTap, required this.name, required this.showPremium});
+  final bool showReport;
+  const CustomAppbar({super.key, required this.onTap, required this.name, required this.showPremium, this.showReport=false});
 
   @override
   Widget build(BuildContext context) {
@@ -108,8 +110,34 @@ class CustomAppbar extends StatelessWidget {
                   ),
                 ),
               )
-              : SizedBox(width: 220.w),
-              SizedBox(width: 20.w),
+              : SizedBox(width: 20.w),
+
+              showReport
+              ? CustomeButtom(
+                height: 80.h,
+                width: 220.w,
+                isShowAd: false,
+                color: Colors.transparent,
+
+                onTap: (){
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true, // needed so it isn't clipped/pushed oddly by the keyboard
+                    builder: (_) => ReportBottomSheet(),
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.only(
+                    left: 60.w,
+                    top: 0.h,
+                    bottom: 0.h,
+                    right: 1.w,
+                  ),
+                  alignment: Alignment.center,
+                  child: Icon(Icons.report, color: AppColors.primaryText,),
+                ),
+              )
+              : SizedBox(width: 20.w),
 
             ],
           ),

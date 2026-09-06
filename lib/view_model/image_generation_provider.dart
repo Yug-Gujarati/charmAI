@@ -16,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../ads/AdsVariable.dart';
 import '../ads/AppLifeReactor.dart';
 import '../ads/appOpenAdManager.dart';
+import '../services/image_filter_service.dart';
 import '../utils/app_constants.dart';
 import '../utils/app_constants.dart' as Fluttertoast;
 import '../view/virtual_try_on_result_screen.dart';
@@ -48,6 +49,8 @@ class ImageGenerationProvider extends ChangeNotifier {
   static const String baseUrl = 'https://www.ailabapi.com';
   static String aiLabApiKey = AdsVariable.ca_ai_lab_tool_api;
   static const String apiKeyField = 'ailabapi-api-key';
+  bool isViolatingImage = false;
+  final ImageFilterService _imageFilterService = ImageFilterService();
 
 
   // ─── Helpers ──────────────────────────────────────────────────
@@ -70,6 +73,14 @@ class ImageGenerationProvider extends ChangeNotifier {
     _girlImage = null;
     _mergedImage = null;
     notifyListeners();
+  }
+
+  Future<bool> _isImageSafe(File image, [File? image2]) async {
+    final isSafe = await _imageFilterService.ImageFilter(image, image2);
+    if (!isSafe) {
+      showLog("Image(s) rejected by content filter.");
+    }
+    return isSafe;
   }
 
   // ─── Pick Boy Image ───────────────────────────────────────────
@@ -225,6 +236,15 @@ class ImageGenerationProvider extends ChangeNotifier {
 
     _setLoading(true);
     _setError(null);
+
+    bool isSafe = await _isImageSafe(_boyImage!, _girlImage);
+
+    if (!isSafe) {
+      _setLoading(false);
+      showLog("One or more image violate");
+      showToast("Images violate our content policy, please try with other image.");
+      return false;
+    }
 
     try {
       // Step 1: Merge images

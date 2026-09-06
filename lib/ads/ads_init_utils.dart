@@ -74,9 +74,9 @@ class AdsSplashUtils {
 
 
           await remoteConfig.fetchAndActivate();
-          showLog("Map is ${remoteConfig.getValue("charm_ai").asString()}");
+          showLog("Map is ${remoteConfig.getValue("charm_ai_v1").asString()}");
           Map<String, dynamic> mapValues1 = jsonDecode(
-            remoteConfig.getValue("charm_ai").asString(),
+            remoteConfig.getValue("charm_ai_v1").asString(),
           );
          // showLog("map is $mapValues1");
 

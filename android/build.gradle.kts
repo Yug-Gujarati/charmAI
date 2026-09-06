@@ -1,15 +1,15 @@
-buildscript {
-    val kotlinVersion = "2.1.0"
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion") // Kotlin plugin
-        classpath("com.android.tools.build:gradle:7.3.1")
-        classpath("com.google.gms:google-services:4.4.2")
-    }
-}
+//buildscript {
+//   val kotlinVersion = "2.2.20"
+//    repositories {
+//        google()
+//        mavenCentral()
+//    }
+//    dependencies {
+//       classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion") // Kotlin plugin
+//        classpath("com.android.tools.build:gradle:8.11.1")
+//        classpath("com.google.gms:google-services:4.4.2")
+//    }
+//}
 
 
 allprojects {

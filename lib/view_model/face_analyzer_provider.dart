@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import '../ads/AdsVariable.dart';
+import '../services/image_filter_service.dart';
 import '../utils/app_constants.dart';
 import '../utils/hairstyle_data.dart';
 import 'coin_managment.dart';
@@ -22,6 +23,9 @@ class FaceAnalyzerProvider extends ChangeNotifier {
   String? _errorMessage;
 
   String? get errorMessage => _errorMessage;
+
+  bool isViolatingImage = false;
+  final ImageFilterService _imageFilterService = ImageFilterService();
 
   void _setLoading(bool value) {
     isLoading = value;
@@ -40,11 +44,28 @@ class FaceAnalyzerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<bool> _isImageSafe(File image, [File? image2]) async {
+    final isSafe = await _imageFilterService.ImageFilter(image, image2);
+    if (!isSafe) {
+      showLog("Image(s) rejected by content filter.");
+    }
+    return isSafe;
+  }
+
   Future<void> analyzeImage(File selectedImage, BuildContext context) async {
     _setLoading(true);
 
-    // 1. Prepare the allowed hairstyle names from your list
-    // 1. Prepare the allowed hairstyle names from your list
+    bool isSafe = await _isImageSafe(selectedImage);
+
+
+    if (!isSafe) {
+      _setLoading(false);
+      showLog("One or more image violate");
+      showToast("Images violate our content policy, please try with other image.");
+      return;
+    }
+
+
     final manStyles = HairstyleData.maleHairstyles.keys.join(", ");
     final womanStyles = HairstyleData.femaleHairstyles.keys.join(", ");
 

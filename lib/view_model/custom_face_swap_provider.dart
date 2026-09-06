@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:charmai/services/image_filter_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -35,15 +36,15 @@ class CustomFaceSwapProvider extends ChangeNotifier {
   File? _targetImage;
   File? get targetImage => _targetImage;
 
+  bool isViolatingImage = false;
+
   String? _taskId;
 
   final ImagePicker _picker = ImagePicker();
   AppOpenAdManager appOpenAdManager = AppOpenAdManager();
   late AppLifecycleReactor _appLifecycleReactor;
+  final ImageFilterService _imageFilterService = ImageFilterService();
 
-  // ─────────────────────────────────────────
-  //  Internal helpers
-  // ─────────────────────────────────────────
 
   void _setLoading(bool value) {
     isLoading = value;
@@ -75,9 +76,14 @@ class CustomFaceSwapProvider extends ChangeNotifier {
     Fluttertoast.showToast(msg: message);
   }
 
-  // ─────────────────────────────────────────
-  //  Image picking — target (user face)
-  // ─────────────────────────────────────────
+  Future<bool> _isImageSafe(File image, [File? image2]) async {
+    final isSafe = await _imageFilterService.ImageFilter(image, image2);
+    if (!isSafe) {
+      showLog("Image(s) rejected by content filter.");
+    }
+    return isSafe;
+  }
+
 
   Future<bool> pickTargetImage() async {
     _appLifecycleReactor = AppLifecycleReactor(appOpenAdManager: appOpenAdManager);
@@ -155,6 +161,14 @@ class CustomFaceSwapProvider extends ChangeNotifier {
       BuildContext context,
       ) async {
     _setLoading(true);
+    
+    bool isSafe = await _isImageSafe(targetImage, templateImage);
+    if (!isSafe) {
+      _setLoading(false);
+      showLog("One or more image violate");
+      showToast("Images violate our content policy, please try with other image.");
+      return;
+    };
 
     try {
       final request = http.MultipartRequest(
@@ -205,9 +219,7 @@ class CustomFaceSwapProvider extends ChangeNotifier {
     }
   }
 
-  // ─────────────────────────────────────────
-  //  STEP 2 — Poll until result is ready
-  // ─────────────────────────────────────────
+
 
   Future<bool> _pollTaskResult({
     int maxAttempts = 100,

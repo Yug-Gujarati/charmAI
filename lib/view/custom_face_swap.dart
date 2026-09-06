@@ -18,6 +18,7 @@ import '../utils/custome_buttom.dart';
 import '../utils/dialog.dart';
 import '../utils/globalVariables.dart'; 
 import '../utils/navigation.dart';
+import '../utils/report_bottom_sheet.dart';
 import '../utils/theme.dart';
 import '../view_model/coin_managment.dart';
 import '../view_model/hair_style_changer_provider.dart';

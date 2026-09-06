@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../ads/AdsVariable.dart';
+import '../services/image_filter_service.dart';
 import '../utils/app_constants.dart';
 import '../utils/hairstyle_data.dart';
 import 'coin_managment.dart';
@@ -21,6 +22,8 @@ class HairStyleChangerProvider extends ChangeNotifier {
   bool isFemale = false;
   String selectedHairStyle = 'BuzzCut';
   String selectedHairColor = 'blonde';
+  bool isViolatingImage = false;
+  final ImageFilterService _imageFilterService = ImageFilterService();
 
   Map<String, String> get currentHairstyles =>
       isFemale ? HairstyleData.femaleHairstyles : HairstyleData.maleHairstyles;
@@ -47,9 +50,6 @@ class HairStyleChangerProvider extends ChangeNotifier {
   static String aiLabApiKey = AdsVariable.ca_ai_lab_tool_api;
   static const String apiKeyField = 'ailabapi-api-key';
 
-  // Available hairstyles
-  // Available hairstyles
-  // Now using HairstyleData from utils
 
   final Map<String, String> hairColors = HairstyleData.hairColors;
 
@@ -71,6 +71,14 @@ class HairStyleChangerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<bool> _isImageSafe(File image, [File? image2]) async {
+    final isSafe = await _imageFilterService.ImageFilter(image, image2);
+    if (!isSafe) {
+      showLog("Image(s) rejected by content filter.");
+    }
+    return isSafe;
+  }
+
   /// Generate task ID by submitting the image with selected hairstyle
   Future<bool> generateTaskId(
     File selectedImage,
@@ -83,6 +91,16 @@ class HairStyleChangerProvider extends ChangeNotifier {
 
     showLog("selected hairstyle is $hairStyle");
     showLog("selected color is $color");
+
+
+    bool isSafe = await _isImageSafe(selectedImage);
+
+    if (!isSafe) {
+      _setLoading(false);
+      showLog("One or more image violate");
+      showToast("Images violate our content policy, please try with other image.");
+      return false;
+    }
 
     try {
       var request = http.MultipartRequest(

@@ -16,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../ads/AdsVariable.dart';
 import '../ads/AppLifeReactor.dart';
 import '../ads/appOpenAdManager.dart';
+import '../services/image_filter_service.dart';
 import '../utils/app_constants.dart';
 import '../utils/navigation.dart';
 import '../view/virtual_try_on_result_screen.dart';
@@ -46,6 +47,8 @@ class VirtualTryOnProvider extends ChangeNotifier {
   String get clothesType => _clothesType;
 
   File? get clothSelectImage => _clothSelectImage;
+  bool isViolatingImage = false;
+  final ImageFilterService _imageFilterService = ImageFilterService();
 
   void _setLoading(bool value) {
     isLoading = value;
@@ -70,6 +73,14 @@ class VirtualTryOnProvider extends ChangeNotifier {
     _taskId = null;
     isLoading = false;
     notifyListeners();
+  }
+
+  Future<bool> _isImageSafe(File image, [File? image2]) async {
+    final isSafe = await _imageFilterService.ImageFilter(image, image2);
+    if (!isSafe) {
+      showLog("Image(s) rejected by content filter.");
+    }
+    return isSafe;
   }
 
   void setClothesType(String type) {
@@ -175,6 +186,16 @@ class VirtualTryOnProvider extends ChangeNotifier {
       BuildContext context,
       ) async {
     _setLoading(true);
+
+    bool isSafe = await _isImageSafe(userImage, clothImage);
+
+    if (!isSafe) {
+      _setLoading(false);
+      showLog("One or more image violate");
+      showToast("Images violate our content policy, please try with other image.");
+      return;
+    }
+
 
     try {
       final request = http.MultipartRequest(

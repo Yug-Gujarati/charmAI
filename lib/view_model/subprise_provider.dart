@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../ads/AdsVariable.dart';
+import '../services/image_filter_service.dart';
 import '../utils/app_constants.dart';
 import '../utils/navigation.dart';
 import '../view/virtual_try_on_result_screen.dart';
@@ -24,6 +25,8 @@ class SubpriseProvider extends ChangeNotifier {
   Map<String, dynamic>? get analysisResult => _analysisResult;
 
   static String geminiApiKey = AdsVariable.ca_gemini_api_key;
+  bool isViolatingImage = false;
+  final ImageFilterService _imageFilterService = ImageFilterService();
 
   static final List<Map<String, dynamic>> surpriseThemes = [
     {
@@ -141,9 +144,27 @@ class SubpriseProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<bool> _isImageSafe(File image, [File? image2]) async {
+    final isSafe = await _imageFilterService.ImageFilter(image, image2);
+    if (!isSafe) {
+      showLog("Image(s) rejected by content filter.");
+    }
+    return isSafe;
+  }
+
 
   Future<Map<String, dynamic>?> analyzeImage(File selectedImage) async {
     _setAnalyzing(true);
+
+
+    bool isSafe = await _isImageSafe(selectedImage);
+
+    if (!isSafe) {
+      _setAnalyzing(false);
+      showLog("One or more image violate");
+      showToast("Images violate our content policy, please try with other image.");
+      return null;
+    }
 
     try {
       final bytes = await selectedImage.readAsBytes();
@@ -325,6 +346,15 @@ class SubpriseProvider extends ChangeNotifier {
 
   Future<void> createSurprise(File selectedImage, BuildContext context) async {
     if (isLoading || isAnalyzing) return;
+
+    _setLoading(true);
+    bool isSafe = await _isImageSafe(selectedImage);
+    if (!isSafe) {
+      _setLoading(false);
+      showLog("One or more image violate");
+      showToast("Image violate our content policy, please try with other image.");
+      return;
+    }
 
     final analysis = await analyzeImage(selectedImage);
     if (!context.mounted) return;

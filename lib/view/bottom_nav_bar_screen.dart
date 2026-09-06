@@ -28,11 +28,7 @@ class BottomNavBarScreen extends StatefulWidget {
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = [
-    const OptionsScreen(),
-    const HomeScreen(),
-    const SavedImages(),
-  ];
+
 
   void _onItemTapped(int index) {
     setState(() {
@@ -156,7 +152,11 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
               children: [
                 IndexedStack(
                   index: _selectedIndex,
-                  children: _screens,
+                  children: [
+                    const OptionsScreen(),
+                    const HomeScreen(),
+                    SavedImages(isActive: _selectedIndex == 2),
+                  ],
                 ),
                 Positioned(
                   bottom: 10.h,

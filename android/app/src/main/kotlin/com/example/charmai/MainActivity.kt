@@ -18,7 +18,7 @@ import android.widget.Toast
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import io.flutter.plugins.googlemobileads.GoogleMobileAdsPlugin
-import io.flutter.plugins.googlemobileads.GoogleMobileAdsPlugin.NativeAdFactory
+import io.flutter.plugins.googlemobileads.NativeAdFactory
 import com.facebook.FacebookSdk
 import com.facebook.LoggingBehavior
 import com.facebook.appevents.AppEventsLogger

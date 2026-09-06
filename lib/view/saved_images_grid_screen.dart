@@ -16,7 +16,8 @@ import '../utils/navigation.dart';
 import 'Image_priview_screen.dart';
 
 class SavedImages extends StatefulWidget {
-  const SavedImages({Key? key}) : super(key: key);
+  final bool isActive;
+  const SavedImages({Key? key, this.isActive = false}) : super(key: key);
 
   @override
   State<SavedImages> createState() => _SavedImagesState();
@@ -32,6 +33,16 @@ class _SavedImagesState extends State<SavedImages> {
     FirebaseAnalyticsService.logEvent(eventName: "CA_SAVED_IMAGE_SCREEN");
     _savedImagesFuture = _loadSavedImages();
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(SavedImages oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isActive && !oldWidget.isActive) {
+      setState(() {
+        _savedImagesFuture = _loadSavedImages();
+      });
+    }
   }
 
 

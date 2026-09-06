@@ -16,6 +16,7 @@ import 'package:image/image.dart' as img;
 import '../ads/AdsVariable.dart';
 import '../ads/AppLifeReactor.dart';
 import '../ads/appOpenAdManager.dart';
+import '../services/image_filter_service.dart';
 import '../utils/app_constants.dart';
 import '../view/virtual_try_on_result_screen.dart';
 import 'coin_managment.dart';
@@ -41,7 +42,9 @@ class FaceSwapProvider extends ChangeNotifier {
   static String aiLabApiKey = AdsVariable.ca_ai_lab_tool_api;
   static const String apiKeyField = 'ailabapi-api-key';
 
-  // ─── Helpers ──────────────────────────────────────────────────
+  bool isViolatingImage = false;
+  final ImageFilterService _imageFilterService = ImageFilterService();
+
   void _setLoading(bool value) {
     isLoading = value;
     notifyListeners();
@@ -50,6 +53,14 @@ class FaceSwapProvider extends ChangeNotifier {
   void _setError(String? message) {
     errorMessage = message;
     notifyListeners();
+  }
+
+  Future<bool> _isImageSafe(File image, [File? image2]) async {
+    final isSafe = await _imageFilterService.ImageFilter(image, image2);
+    if (!isSafe) {
+      showLog("Image(s) rejected by content filter.");
+    }
+    return isSafe;
   }
 
   void clearResults() {
@@ -213,10 +224,18 @@ class FaceSwapProvider extends ChangeNotifier {
   // ─── API Call ─────────────────────────────────────────────────
   Future<bool> _callFaceSwapApi(
       File targetImage, File templateFile, BuildContext context) async {
+
+    bool isSafe = await _isImageSafe(targetImage);
+    if (!isSafe) {
+      _setLoading(false);
+      showLog("One or more image violate");
+      showToast("Images violate our content policy, please try with other image.");
+      return false;
+    }
+
     try {
       showLog("this is target image $targetImage");
       showLog("this is template file $templateFile");
-      showLog("this is apikey $aiLabApiKey");
 
       var request = http.MultipartRequest(
         'POST',

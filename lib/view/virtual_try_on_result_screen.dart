@@ -99,6 +99,7 @@ class _VirtualTryOnResultScreenState extends State<VirtualTryOnResultScreen> {
               onTap: () => AppNavigation.NavigationBack(context),
               name: AppLocalizations.of(context)?.youcreation ??"Your Creation",
               showPremium: false,
+              showReport: true,
             ),
             Expanded(
               child: SingleChildScrollView(

@@ -9,7 +9,9 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../ads/AdsVariable.dart';
+import '../services/image_filter_service.dart';
 import '../utils/app_constants.dart';
+import '../utils/app_constants.dart' as Fluttertoast;
 import '../utils/navigation.dart';
 import '../view/virtual_try_on_result_screen.dart';
 import 'coin_managment.dart';
@@ -18,9 +20,9 @@ class DatingRedyImageProvider extends ChangeNotifier{
   bool isLoading = false;
   File? resultImage;
   String? errorMessage;
+  bool isViolatingImage = false;
+  final ImageFilterService _imageFilterService = ImageFilterService();
 
-  /// change api here
-  // Gemini API Configuration
   static String geminiApiKey = AdsVariable.ca_gemini_api_key;
 
   void _setLoading(bool value) {
@@ -39,9 +41,26 @@ class DatingRedyImageProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  Future<bool> _isImageSafe(File image, [File? image2]) async {
+    final isSafe = await _imageFilterService.ImageFilter(image, image2);
+    if (!isSafe) {
+      showLog("Image(s) rejected by content filter.");
+    }
+    return isSafe;
+  }
+
   /// Enhance image using Gemini API
   Future<void> datingImageGenerator(File selectedImage, BuildContext context) async {
     _setLoading(true);
+
+    bool isSafe = await _isImageSafe(selectedImage);
+    if (!isSafe) {
+      _setLoading(false);
+      showLog("One or more image violate");
+      showToast("Images violate our content policy, please try with other image.");
+      return;
+    }
+
     final coinProvider = Provider.of<CoinProvider>(context, listen: false);
 
     try {
