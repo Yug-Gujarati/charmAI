@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../ads/AdsVariable.dart';
 import '../services/image_filter_service.dart';
 import '../utils/app_constants.dart';
+import '../utils/loading_screen.dart';
 import 'coin_managment.dart';
 
 class FaceBeautyProvider extends ChangeNotifier {
@@ -63,6 +64,9 @@ class FaceBeautyProvider extends ChangeNotifier {
     if (value) {
       _errorMessage = null;
       _resultImage = null;
+      loadingScreen.show();
+    } else {
+      loadingScreen.hide();
     }
     notifyListeners();
   }
@@ -172,15 +176,10 @@ class FaceBeautyProvider extends ChangeNotifier {
             _handleError("Result image URL is empty. Please try again.");
           }
         } else {
-          // Surface the API error message to the user
-          final String apiError =
-              json['error_msg']?.toString() ??
-                  json['error_detail']?['message']?.toString() ??
-                  'Unknown API error (code: $errorCode)';
-          _handleError(apiError);
+          _handleError(parseApiErrorMessage(response.body));
         }
       } else {
-        _handleError('Server error: ${response.statusCode}. Please try again.');
+        _handleError(parseApiErrorMessage(response.body));
       }
     } catch (e, stackTrace) {
       showLog("Exception in applyFaceBeauty: $e\n$stackTrace");

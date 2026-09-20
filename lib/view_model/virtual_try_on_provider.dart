@@ -19,6 +19,7 @@ import '../ads/appOpenAdManager.dart';
 import '../services/image_filter_service.dart';
 import '../utils/app_constants.dart';
 import '../utils/navigation.dart';
+import '../utils/loading_screen.dart';
 import '../view/virtual_try_on_result_screen.dart';
 import 'coin_managment.dart';
 
@@ -56,6 +57,9 @@ class VirtualTryOnProvider extends ChangeNotifier {
       _errorMessage = null;
       _resultImageUrl = null;
       _resultImage = null;
+      loadingScreen.show();
+    } else {
+      loadingScreen.hide();
     }
     notifyListeners();
   }
@@ -238,12 +242,10 @@ class VirtualTryOnProvider extends ChangeNotifier {
             _handleError("No task ID returned. Please try again.");
           }
         } else {
-          final msg = json['error_msg'] ?? 'Unknown error';
-          showLog("API error: $msg");
-          _handleError(msg.toString());
+          _handleError(parseApiErrorMessage(response.body));
         }
       } else {
-        _handleError('Server error: ${response.statusCode}');
+        _handleError(parseApiErrorMessage(response.body));
       }
     } catch (e) {
       showLog("Exception in virtualTryOn: $e");
@@ -340,11 +342,11 @@ class VirtualTryOnProvider extends ChangeNotifier {
               continue;
             }
           } else {
-            _handleError(json['error_msg']?.toString() ?? 'Query error');
+            _handleError(parseApiErrorMessage(response.body));
             return false;
           }
         } else {
-          _handleError('Server error: ${response.statusCode}');
+          _handleError(parseApiErrorMessage(response.body));
           return false;
         }
       } catch (e) {

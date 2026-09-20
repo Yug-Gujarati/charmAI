@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:charmai/utils/navigation.dart';
+import 'package:charmai/utils/loading_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -47,6 +48,11 @@ class FaceSwapProvider extends ChangeNotifier {
 
   void _setLoading(bool value) {
     isLoading = value;
+    if (value) {
+      loadingScreen.show();
+    } else {
+      loadingScreen.hide();
+    }
     notifyListeners();
   }
 
@@ -416,10 +422,10 @@ class FaceSwapProvider extends ChangeNotifier {
             return false;
           }
         } else {
-          showToast("Something went wrong, please try again");
-          _setError('Server error: ${response.statusCode}');
-          showLog('Server error: ${response.statusCode}');
-          showLog('Server error: ${response.body}');
+          final errMsg = parseApiErrorMessage(response.body);
+          showToast(errMsg);
+          _setError(errMsg);
+          showLog('Server error: ${response.statusCode} | ${response.body}');
           _setLoading(false);
           return false;
         }

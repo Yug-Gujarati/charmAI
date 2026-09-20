@@ -80,15 +80,17 @@ class DialogService {
         backgroundColor: Colors.black,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Container(
-          height: 550.h,
+          height: 600.h,
           decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
               image: AssetImage("assets/change_hair_style/popup.png"),
               fit: BoxFit.fill,
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.all(20.w),
+            padding: EdgeInsets.all(10.w),
             child: Column(
               children: [
                 /// Close Button
@@ -110,13 +112,13 @@ class DialogService {
 
                 /// Text (use outerContext for localization)
                 CustomText(
-                  text: AppLocalizations.of(context)?.choosehowtoliketogenerate ??"Choose how you'd like to continue generating image",
-                  fontSize: 50,
+                  text: AppLocalizations.of(context)?.choosehowtoliketogenerate ??"Choose how you'd like to continue generating image. Get reward by viewing ad or get purchase",
+                  fontSize: 45,
                   fontFamily: 'medium',
                   textColor: AppColors.primaryText,
                   align: TextAlign.center,
-                  width: 600,
-                  maxline: 3,
+                  width: 700,
+                  maxline: 4,
                 ),
 
                 SizedBox(height: 40.h),
@@ -180,7 +182,7 @@ class DialogService {
                       },
                       child: Center(
                         child: CustomText(
-                          text: AppLocalizations.of(context)?.getrewared ??"Get reward",
+                          text: AppLocalizations.of(context)?.getrewared ??"Watch ad",
                           maxline: 1,
                           fontFamily: 'medium',
                           width: 450,

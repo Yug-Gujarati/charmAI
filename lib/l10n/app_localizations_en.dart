@@ -162,7 +162,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nocreationyet => 'No creations yet';
 
   @override
-  String get getrewared => 'Get reward';
+  String get getrewared => 'Watch Ad';
 
   @override
   String get delete => 'Delete';
@@ -189,7 +189,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get datingredyimage => 'Dating Ready Image';
 
   @override
-  String get choosehowtoliketogenerate => 'Choose how you\'d like to continue generating image';
+  String get choosehowtoliketogenerate => 'Choose how you\'d like to continue generating image. Watch an ad to earn a reward or purchase credits';
 
   @override
   String get faceSwap => 'Face Swap';

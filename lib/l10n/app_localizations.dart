@@ -434,7 +434,7 @@ abstract class AppLocalizations {
   /// No description provided for @getrewared.
   ///
   /// In en, this message translates to:
-  /// **'Get reward'**
+  /// **'Watch Ad'**
   String get getrewared;
 
   /// No description provided for @delete.
@@ -488,7 +488,7 @@ abstract class AppLocalizations {
   /// No description provided for @choosehowtoliketogenerate.
   ///
   /// In en, this message translates to:
-  /// **'Choose how you\'d like to continue generating image'**
+  /// **'Choose how you\'d like to continue generating image. Watch an ad to earn a reward or purchase credits'**
   String get choosehowtoliketogenerate;
 
   /// No description provided for @faceSwap.

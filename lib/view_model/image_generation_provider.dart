@@ -19,6 +19,7 @@ import '../ads/appOpenAdManager.dart';
 import '../services/image_filter_service.dart';
 import '../utils/app_constants.dart';
 import '../utils/app_constants.dart' as Fluttertoast;
+import '../utils/loading_screen.dart';
 import '../view/virtual_try_on_result_screen.dart';
 import 'coin_managment.dart';
 
@@ -56,6 +57,11 @@ class ImageGenerationProvider extends ChangeNotifier {
   // ─── Helpers ──────────────────────────────────────────────────
   void _setLoading(bool value) {
     isLoading = value;
+    if (value) {
+      loadingScreen.show();
+    } else {
+      loadingScreen.hide();
+    }
     notifyListeners();
   }
 

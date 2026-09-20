@@ -3,13 +3,13 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import '../ads/AdsVariable.dart';
 import '../services/image_filter_service.dart';
 import '../utils/app_constants.dart';
+import '../utils/loading_screen.dart';
 import '../utils/hairstyle_data.dart';
 import 'coin_managment.dart';
 
@@ -32,6 +32,9 @@ class FaceAnalyzerProvider extends ChangeNotifier {
     if (value) {
       _errorMessage = null;
       _analysisResult = null;
+      loadingScreen.show();
+    } else {
+      loadingScreen.hide();
     }
     notifyListeners();
   }
@@ -53,6 +56,11 @@ class FaceAnalyzerProvider extends ChangeNotifier {
   }
 
   Future<void> analyzeImage(File selectedImage, BuildContext context) async {
+    if (!context.mounted) {
+      return;
+    }
+
+    final coinProvider = Provider.of<CoinProvider>(context, listen: false);
     _setLoading(true);
 
     bool isSafe = await _isImageSafe(selectedImage);
@@ -69,15 +77,13 @@ class FaceAnalyzerProvider extends ChangeNotifier {
     final manStyles = HairstyleData.maleHairstyles.keys.join(", ");
     final womanStyles = HairstyleData.femaleHairstyles.keys.join(", ");
 
-    final coinProvider = Provider.of<CoinProvider>(context, listen: false);
-
     try {
       final bytes = await selectedImage.readAsBytes();
-      final base64Image = base64Encode(bytes);
+      final base64Image = await compute(base64Encode, bytes);
 
       // Using the 2.5 Flash Lite model for best cost/speed balance in 2026
       final url = Uri.parse(
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=$geminiApiKey',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=$geminiApiKey',
       );
 
       final response = await http.post(
@@ -99,15 +105,15 @@ class FaceAnalyzerProvider extends ChangeNotifier {
                 {
                   'text':
                       '''Analyze this face. Detect gender and shape. 
-Allowed Men's Styles: $manStyles
-Allowed Women's Styles: $womanStyles
-
-Pick from the lists and return JSON:
-{
-  "gender": "man or woman",
-  "faceShape": "oval, round, square, heart, diamond, oblong", 
-  "hairstyles": ["StyleName1", "StyleName2", "StyleName2"] 
-}''',
+                          Allowed Men's Styles: $manStyles
+                          Allowed Women's Styles: $womanStyles
+                          
+                          Pick from the lists and return JSON:
+                          {
+                            "gender": "man or woman",
+                            "faceShape": "oval, round, square, heart, diamond, oblong", 
+                            "hairstyles": ["StyleName1", "StyleName2", "StyleName2"] 
+                          }''',
                 },
                 {
                   'inline_data': {
@@ -138,7 +144,6 @@ Pick from the lists and return JSON:
         _analysisResult = result;
         _setLoading(false);
         showLog("this is befaure coin provider $result");
-        showLog("context.mounted = ${context.mounted}");
 
         await coinProvider.decrementCoins(AdsVariable.ca_reduce_coin_on_ai_lab_api);
 

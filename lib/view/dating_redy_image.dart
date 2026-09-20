@@ -99,7 +99,10 @@ class _DatingRedyImageState extends State<DatingRedyImage> {
                           width: 950.w,
                           image: "assets/change_hair_style/button.png",
                           onTap: () {
-                            if (imagePickerProvider.selectedImage == null) {
+                            if(DatingProvider.isLoading){
+                              showToast("Image generation is in progress, please wait");
+                            }
+                            else if (imagePickerProvider.selectedImage == null) {
                               showToast("Please select your image");
                             } else {
                               if (coinProvider.coins >=

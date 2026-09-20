@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
@@ -12,6 +12,7 @@ import '../ads/AdsVariable.dart';
 import '../services/image_filter_service.dart';
 import '../utils/app_constants.dart';
 import '../utils/navigation.dart';
+import '../utils/loading_screen.dart';
 import '../view/virtual_try_on_result_screen.dart';
 import 'coin_managment.dart';
 
@@ -126,6 +127,9 @@ class SubpriseProvider extends ChangeNotifier {
     if (value) {
       errorMessage = null;
       resultImage = null;
+      loadingScreen.show();
+    } else {
+      loadingScreen.hide();
     }
     notifyListeners();
   }
@@ -156,7 +160,6 @@ class SubpriseProvider extends ChangeNotifier {
   Future<Map<String, dynamic>?> analyzeImage(File selectedImage) async {
     _setAnalyzing(true);
 
-
     bool isSafe = await _isImageSafe(selectedImage);
 
     if (!isSafe) {
@@ -168,9 +171,9 @@ class SubpriseProvider extends ChangeNotifier {
 
     try {
       final bytes = await selectedImage.readAsBytes();
-      final base64Image = base64Encode(bytes);
+      final base64Image = await compute(base64Encode, bytes);
 
-      final url = Uri.parse('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=$geminiApiKey');
+      final url = Uri.parse('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=$geminiApiKey');
 
       final themeNames = surpriseThemes.map((t) => t['name']).join(", ");
 
@@ -229,16 +232,19 @@ class SubpriseProvider extends ChangeNotifier {
         _analysisResult = result;
         showLog("Analysis successful: $result");
         _setAnalyzing(false);
+        _setLoading(false);
         return result;
       } else {
         showLog("Analyze API error: ${response.body}");
         _setAnalyzing(false);
-        return null; // caller falls back to generic prompt
+        _setLoading(false);
+        return null;
       }
     } catch (e) {
       showLog("Error in analyzeImage: $e");
       _setAnalyzing(false);
-      return null; // fail-soft — generation stage handles null
+      _setLoading(false);
+      return null;
     }
   }
 
@@ -248,7 +254,7 @@ class SubpriseProvider extends ChangeNotifier {
 
     try {
       final userBytes = await selectedImage.readAsBytes();
-      final userBase64 = base64Encode(userBytes);
+      final userBase64 = await compute(base64Encode, userBytes);
 
       final effectiveAnalysis = analysis ?? _analysisResult;
       final prompt = _buildPrompt(effectiveAnalysis);
@@ -423,7 +429,7 @@ Output an ultra-realistic photo in 4K detail, vertical 9:16 aspect ratio, target
         throw Exception("Invalid base64 string format");
       }
 
-      final bytes = base64Decode(base64String);
+      final bytes = await compute(base64Decode, base64String);
       final directory = await getApplicationDocumentsDirectory();
       final fileName = 'surprise_${DateTime.now().millisecondsSinceEpoch}.jpg';
       final file = File('${directory.path}/$fileName');

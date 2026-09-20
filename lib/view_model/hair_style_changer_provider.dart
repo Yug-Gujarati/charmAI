@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../ads/AdsVariable.dart';
 import '../services/image_filter_service.dart';
 import '../utils/app_constants.dart';
+import '../utils/loading_screen.dart';
 import '../utils/hairstyle_data.dart';
 import 'coin_managment.dart';
 
@@ -55,6 +56,11 @@ class HairStyleChangerProvider extends ChangeNotifier {
 
   void _setLoading(bool value) {
     isLoading = value;
+    if (value) {
+      loadingScreen.show();
+    } else {
+      loadingScreen.hide();
+    }
     notifyListeners();
   }
 
@@ -151,7 +157,8 @@ class HairStyleChangerProvider extends ChangeNotifier {
             return false;
           }
         } else {
-          showToast("Something went wrong, please try again");
+
+          showToast(parseApiErrorMessage(response.body));
           showLog(
             "error is ${jsonResponse['error_msg'] ?? 'Unknown error occurred'}",
           );
@@ -160,7 +167,7 @@ class HairStyleChangerProvider extends ChangeNotifier {
           return false;
         }
       } else {
-        showToast("Something went wrong, please try again");
+        showToast(parseApiErrorMessage(response.body));
         showLog("error ${response.statusCode}");
         _setError('Server error: ${response.statusCode}');
         _setLoading(false);
@@ -270,13 +277,13 @@ class HairStyleChangerProvider extends ChangeNotifier {
               continue;
             }
           } else {
-            showToast("Something went wrong, please try again");
+            showToast(parseApiErrorMessage(response.body));
             _setError(jsonResponse['error_msg'] ?? 'Query error');
             _setLoading(false);
             return false;
           }
         } else {
-          showToast("Something went wrong, please try again");
+          showToast(parseApiErrorMessage(response.body));
           _setError('Server error: ${response.statusCode}');
           _setLoading(false);
           return false;

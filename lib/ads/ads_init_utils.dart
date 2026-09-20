@@ -74,9 +74,9 @@ class AdsSplashUtils {
 
 
           await remoteConfig.fetchAndActivate();
-          showLog("Map is ${remoteConfig.getValue("charm_ai_v1").asString()}");
+          showLog("Map is ${remoteConfig.getValue("charm_ai_v4").asString()}");
           Map<String, dynamic> mapValues1 = jsonDecode(
-            remoteConfig.getValue("charm_ai_v1").asString(),
+            remoteConfig.getValue("charm_ai_v4").asString(),
           );
          // showLog("map is $mapValues1");
 
@@ -98,9 +98,6 @@ class AdsSplashUtils {
           AdsVariable.ca_buttonBgColor_end = mapValues1["ca_buttonBgColor_end"];
           AdsVariable.ca_headlineTxtColor = mapValues1["ca_headlineTxtColor"];
           AdsVariable.ca_bodyTxtColor = mapValues1["ca_bodyTxtColor"];
-          showLog("this is 3");
-          AdsVariable.ca_facebookId = mapValues1["ca_facebookId"];
-          AdsVariable.ca_facebookToken = mapValues1["ca_facebookToken"];
 
           AdsVariable.ca_showOpenAdInSplash =
               mapValues1["ca_showOpenAdInSplash"];
@@ -269,8 +266,6 @@ void setupFbAdsId() async {
   if (Platform.isIOS) {
     platformMethodChannel.invokeMethod('setToast', {
       'isPurchase': GlobalVariables.isPremiumUser.toString(),
-      'facebookId': AdsVariable.ca_facebookId,
-      'facebookToken': AdsVariable.ca_facebookToken,
       'nativeBGColor': AdsVariable.ca_nativeBgColor,
       'btnBgColor': AdsVariable.ca_buttonBgColor_start,
       'btnBgColor3': AdsVariable.ca_buttonBgColor_end,
@@ -280,8 +275,6 @@ void setupFbAdsId() async {
     });
   } else {
     platformMethodChannel.invokeMethod('setToast', {
-      'fb_appid': AdsVariable.ca_facebookId,
-      'fb_token': AdsVariable.ca_facebookToken,
       'btnBgColorG1': "#${AdsVariable.ca_buttonBgColor_start}",
       'btnBgColorG2': "#${AdsVariable.ca_buttonBgColor_end}",
       'nativeBGColor': "#${AdsVariable.ca_nativeBgColor}",

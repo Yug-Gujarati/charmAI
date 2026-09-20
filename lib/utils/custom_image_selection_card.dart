@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:charmai/utils/scanner_loader.dart';
+
 import 'package:charmai/utils/theme.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -122,18 +122,7 @@ class CustomImageSelectionCard extends StatelessWidget {
       );
     }
 
-    // Add loading overlay if processing
-    if (isLoading) {
-      if (originalImage != null) {
-        return ScannerLoader(imagePath: originalImage,);
-      }
-      else if(networkImage != null){
-        return ScannerLoader(imagePath: networkImage);
-      }
-      else{
-        return ScannerLoader(imagePath: originalImage,);
-      }
-    }
+    // Loading overlay is now handled globally by LoadingScreen
     return content;
   }
 }

@@ -98,8 +98,8 @@ class _IntroScreenState extends State<IntroScreen> {
                   currentPage: _currentPage,
                   isNativeloaded: _isNativeAdLoaded,
                 ),
-                if (AdsLoadUtil.isNativeIntroAdLoaded.value)
-                  NativeIntroAdsWidget(showNativeAd: AdsVariable.introFullAd!),
+                // if (AdsLoadUtil.isNativeIntroAdLoaded.value)
+                //   NativeIntroAdsWidget(showNativeAd: AdsVariable.introFullAd!),
                 Intro(
                   title: AppLocalizations.of(context)?.intro3title ??"Try Hairstyles & Outfits Instantly",
                   description:

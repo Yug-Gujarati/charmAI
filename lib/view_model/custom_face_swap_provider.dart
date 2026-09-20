@@ -16,6 +16,7 @@ import '../ads/AppLifeReactor.dart';
 import '../ads/appOpenAdManager.dart';
 import '../utils/app_constants.dart';
 import '../utils/navigation.dart';
+import '../utils/loading_screen.dart';
 import '../view/virtual_try_on_result_screen.dart';
 import 'coin_managment.dart';
 
@@ -51,6 +52,9 @@ class CustomFaceSwapProvider extends ChangeNotifier {
     if (value) {
       _errorMessage = null;
       _resultImage = null;
+      loadingScreen.show();
+    } else {
+      loadingScreen.hide();
     }
     notifyListeners();
   }
@@ -208,10 +212,10 @@ class CustomFaceSwapProvider extends ChangeNotifier {
             _handleError("No task ID returned. Please try again.");
           }
         } else {
-          _handleError(jsonBody['error_msg']?.toString() ?? 'Unknown error');
+          _handleError(parseApiErrorMessage(response.body));
         }
       } else {
-        _handleError('Server error: ${response.statusCode}');
+        _handleError(parseApiErrorMessage(response.body));
       }
     } catch (e) {
       showLog("Exception in applyFaceSwap: $e");
@@ -307,7 +311,7 @@ class CustomFaceSwapProvider extends ChangeNotifier {
             return false;
           }
         } else {
-          _handleError('Server error: ${response.statusCode}');
+          _handleError(parseApiErrorMessage(response.body));
           return false;
         }
       } catch (e) {

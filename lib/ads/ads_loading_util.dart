@@ -115,7 +115,7 @@ class AdsLoadUtil extends GetxController {
             ad.show();
             ad.fullScreenContentCallback = FullScreenContentCallback(
               onAdShowedFullScreenContent: (ad) {
-                openAdOpenAdLoadingScreen.hide();
+
                 showLog('Ad showed full screen content');
               },
               onAdFailedToShowFullScreenContent: (ad, error) {
@@ -126,7 +126,7 @@ class AdsLoadUtil extends GetxController {
               onAdDismissedFullScreenContent: (ad) {
                 ///CHANGES TO LOAD PRE LOAD AFTER SPLASH DISMISSED
                 AdsVariable.isShowingAd = false;
-
+                openAdOpenAdLoadingScreen.hide();
                 AppOpenAdManager appOpenAdManager = AppOpenAdManager();
                 AppLifecycleReactor lifecycleReactor = AppLifecycleReactor(
                   appOpenAdManager: appOpenAdManager,
@@ -200,34 +200,34 @@ class AdsLoadUtil extends GetxController {
         loadingScreen.hide();
         // Close the loading dialog
 
-        // Show the ad
-        _interstitialAd!.show();
-        _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-          onAdImpression: (ad) {
-            showLog("onAdImpression---> true");
-            Future.delayed(const Duration(milliseconds: 500), () {
-              onDismissed();
-            });
-          },
-          onAdDismissedFullScreenContent: (ad) {
-            showLog("onAdDismissedFullScreenContent---> true");
-            AdsVariable.isShowingAd = false;
-
-            ad.dispose();
-            _interstitialAd!.dispose().then(
-              (value) => loadPreInterstitialAd(adId: interstitialId),
-            );
-          },
-          onAdFailedToShowFullScreenContent: (ad, error) {
-            AdsVariable.isShowingAd = false;
-
-            showLog("onAdFailedToShowFullScreenContent---> Error $error");
-            ad.dispose();
-            // _interstitialAd!.dispose().then((value) => loadPreInterstitialAd(adId: interstitialId));
-            loadPreInterstitialAd(adId: interstitialId);
+      // Show the ad
+      _interstitialAd!.show();
+      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdImpression: (ad) {
+          showLog("onAdImpression---> true");
+          Future.delayed(const Duration(milliseconds: 500), () {
             onDismissed();
-          },
-        );
+          });
+        },
+        onAdDismissedFullScreenContent: (ad) {
+          showLog("onAdDismissedFullScreenContent---> true");
+          AdsVariable.isShowingAd = false;
+
+          ad.dispose();
+          _interstitialAd!.dispose().then(
+            (value) => loadPreInterstitialAd(adId: interstitialId),
+          );
+        },
+        onAdFailedToShowFullScreenContent: (ad, error) {
+          AdsVariable.isShowingAd = false;
+
+          showLog("onAdFailedToShowFullScreenContent---> Error $error");
+          ad.dispose();
+          // _interstitialAd!.dispose().then((value) => loadPreInterstitialAd(adId: interstitialId));
+          loadPreInterstitialAd(adId: interstitialId);
+          onDismissed();
+        },
+      );
       });
     } else {
       loadAndShowPreloadedInterstitial(
@@ -755,14 +755,14 @@ class _NativeAdsWidgetState extends State<NativeAdsWidget> {
           ? StatefulBuilder(
               builder: (context, setState) {
                 return Container(
-                  margin: EdgeInsets.only(bottom: 40.h),
+                  margin: EdgeInsets.only(bottom: 1.h),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.w),
                     color: Colors.transparent,
                   ),
-                  padding: EdgeInsets.only(bottom: 10.w, top: 0.w),
+                  padding: EdgeInsets.only(bottom: 0.w, top: 0.w),
                   width: 1080.w,
-                  height: widget.isSmallNative ? 150 : 300,
+                  height: widget.isSmallNative ? 150 : 380,
                   child: AdWidget(ad: widget.showNativeAd!),
                 );
               },

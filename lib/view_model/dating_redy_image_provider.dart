@@ -13,6 +13,7 @@ import '../services/image_filter_service.dart';
 import '../utils/app_constants.dart';
 import '../utils/app_constants.dart' as Fluttertoast;
 import '../utils/navigation.dart';
+import '../utils/loading_screen.dart';
 import '../view/virtual_try_on_result_screen.dart';
 import 'coin_managment.dart';
 
@@ -30,6 +31,9 @@ class DatingRedyImageProvider extends ChangeNotifier{
     if (value) {
       errorMessage = null;
       resultImage = null;
+      loadingScreen.show();
+    } else {
+      loadingScreen.hide();
     }
     notifyListeners();
   }
@@ -65,7 +69,7 @@ class DatingRedyImageProvider extends ChangeNotifier{
 
     try {
       final userBytes = await selectedImage.readAsBytes();
-      final userBase64 = base64Encode(userBytes);
+      final userBase64 = await compute(base64Encode, userBytes);
 
       final url = Uri.parse(
         'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=$geminiApiKey',
@@ -220,7 +224,7 @@ Output ultra-realistic DSLR portrait, vertical 9:16, minimum 2048×4096 resoluti
         throw Exception("Invalid base64 string format");
       }
 
-      final bytes = base64Decode(base64String);
+      final bytes = await compute(base64Decode, base64String);
       final directory = await getApplicationDocumentsDirectory();
       final fileName = 'enhanced_${DateTime.now().millisecondsSinceEpoch}.jpg';
       final file = File('${directory.path}/$fileName');

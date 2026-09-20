@@ -19,9 +19,6 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import io.flutter.plugins.googlemobileads.GoogleMobileAdsPlugin
 import io.flutter.plugins.googlemobileads.NativeAdFactory
-import com.facebook.FacebookSdk
-import com.facebook.LoggingBehavior
-import com.facebook.appevents.AppEventsLogger
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugins.GeneratedPluginRegistrant
@@ -48,8 +45,6 @@ class MainActivity: FlutterActivity(){
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, NATIVE_CHANNEL).setMethodCallHandler { call: MethodCall, result ->
             if (call.method == "setToast") {
                 try {
-                    val fb_appid = call.argument<String>("fb_appid")!!
-                    val fb_token = call.argument<String>("fb_token")!!
                     startColor = call.argument<String>("btnBgColorG1")!!
                     endColor = call.argument<String>("btnBgColorG2")!!
                     backgroundColor = call.argument<String>("nativeBGColor")!!
@@ -65,19 +60,7 @@ class MainActivity: FlutterActivity(){
                     Log.d("NativeAdFactoryBig", "bodyTextColor: $bodyTextColor")
                     Log.d("NativeAdFactoryBig", "buttonTextColor: $buttonTextColor")
 
-                    // Uncomment below line for debugging
-                    //setText("fb_appid : $fb_appid, fb_token : $fb_token")
-
                     // Register ad factories here, after initializing properties
-
-                    FacebookSdk.setApplicationId(fb_appid)
-                    FacebookSdk.setClientToken(fb_token)
-                    FacebookSdk.sdkInitialize(this@MainActivity)
-                    FacebookSdk.setAutoInitEnabled(true)
-                    FacebookSdk.fullyInitialize()
-                    FacebookSdk.setAutoLogAppEventsEnabled(true)
-                    FacebookSdk.addLoggingBehavior(LoggingBehavior.APP_EVENTS)
-                    AppEventsLogger.newLogger(this@MainActivity).applicationId
 
                     GoogleMobileAdsPlugin.registerNativeAdFactory(
                         flutterEngine,

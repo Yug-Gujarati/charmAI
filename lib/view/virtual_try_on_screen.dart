@@ -175,7 +175,10 @@ class _VirtualTryOnScreenState extends State<VirtualTryOnScreen> {
                           width: 950.w,
                           image: "assets/change_hair_style/button.png",
                           onTap: ()  {
-                            if(provider.clothSelectImage == null){
+                            if(provider.isLoading){
+                              showToast("Image generation is in progress, please wait");
+                            }
+                            else if(provider.clothSelectImage == null){
                               showToast("Please select cloth image first");
                             }
                             else if(imageProvider.selectedImage == null){

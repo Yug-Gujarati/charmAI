@@ -50,7 +50,6 @@ class _SubpriseScreenState extends State<SubpriseScreen> {
 
     await context.read<CoinProvider>().fetchCoins();
 
-    // Now read the updated value
     setState(() {
       currentCoins = context.read<CoinProvider>().coins;
       showLog("Correct coin is $currentCoins"); // Now it will match!
@@ -89,8 +88,6 @@ class _SubpriseScreenState extends State<SubpriseScreen> {
                         vSpace(20.h),
                         CustomImageSelectionCard(
                           originalImage: imagePickerProvider.selectedImage,
-                          //generatedImage: subpriseProvider.resultImage,
-                          // covers both the analyze stage and the generate stage
                           isLoading: subpriseProvider.isAnalyzing || subpriseProvider.isLoading,
                           onTap: () {
                             imagePickerProvider.pickImage();
@@ -103,7 +100,10 @@ class _SubpriseScreenState extends State<SubpriseScreen> {
                           width: 950.w,
                           image: "assets/change_hair_style/button.png",
                           onTap: () {
-                            if (imagePickerProvider.selectedImage == null) {
+                            if(subpriseProvider.isAnalyzing ||subpriseProvider.isLoading ){
+                              showToast("Image generation is in progress, please wait");
+                            }
+                            else if (imagePickerProvider.selectedImage == null) {
                               showToast("Please select your image");
                             } else {
                               if (coinProvider.coins >=

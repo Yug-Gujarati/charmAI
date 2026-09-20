@@ -1,11 +1,7 @@
-import 'dart:io';
-
-
 import 'package:charmai/view/premium_screen.dart';
 import 'package:charmai/view_model/image_picker_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../ads/AdsVariable.dart';
@@ -39,22 +35,23 @@ class _FaceAnalyzerState extends State<FaceAnalyzer> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
     _fetchCoins();
     FirebaseAnalyticsService.logEvent(eventName: "CA_FACE_ANALYZE_SCREEN");
-    super.initState();
   }
 
   int currentCoins = 0;
 
   Future<void> _fetchCoins() async {
-    String deviceId = await context.read<CoinProvider>().getRandomId();
+    final coinProvider = context.read<CoinProvider>();
+    await coinProvider.getRandomId();
 
-    await context.read<CoinProvider>().fetchCoins();
+    await coinProvider.fetchCoins();
 
     // Now read the updated value
+    if (!mounted) return;
     setState(() {
-      currentCoins = context.read<CoinProvider>().coins;
+      currentCoins = coinProvider.coins;
       showLog("Correct coin is $currentCoins"); // Now it will match!
     });
   }

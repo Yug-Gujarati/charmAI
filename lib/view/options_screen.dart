@@ -26,7 +26,7 @@ class OptionsScreen extends StatefulWidget {
 class _OptionsScreenState extends State<OptionsScreen> {
   List<optionModel> getTools(BuildContext context) {
     return [
-      optionModel(title: AppLocalizations.of(context)?.aidatingimage ?? 'AI Dating Tool', image: 'assets/home/dating.webp', description: 'Create perfect profile pics', screen: const DatingRedyImage()),
+      optionModel(title: AppLocalizations.of(context)?.aidatingimage ?? 'AI Dating', image: 'assets/home/dating.webp', description: 'Create perfect profile pics', screen: const DatingRedyImage()),
       optionModel(title: AppLocalizations.of(context)?.faceSwap ?? 'FacesWap', image: 'assets/home/face_swape.webp', description: 'AI-Powered Face Transformations', screen: const CustomFaceSwap()),
       optionModel(title: AppLocalizations.of(context)?.chagehairstyle ?? 'Hairstyle Change', image: 'assets/home/hair.webp', description: 'Try 100+ Hairstyle Instantly', screen: const HairStyleChanger()),
       optionModel(title: AppLocalizations.of(context)?.virtualtryon ?? 'Cloth Chanager', image: 'assets/home/cloth.webp', description: 'Change outfits with AI', screen: const VirtualTryOnScreen()),
@@ -41,62 +41,66 @@ class _OptionsScreenState extends State<OptionsScreen> {
 
     return Container(
       color: AppColors.mainAppBackground,
-      child: Padding(
-        padding: EdgeInsets.only(left: 50.w, right: 50.w,),
-        child: Column(
-          children: [
-            CustomeButtomWithImage(
-              height: 250.h,
-              width: double.infinity,
-              image: "assets/home/subprice.webp",
-              onTap: () {
-                AdsSplashUtils.onShowAds(context, () {
-                  AppNavigation.NavigationPush(context, SubpriseScreen());
-                });
-              },
-              isShowAd: true,
-              child: Row(
-                children: [
-                  Spacer(),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-
-                    children: [
-                      CustomText(text:"AI Has a Surprise for You", fontSize: 40, textColor: AppColors.primaryText, width: 600, fontFamily: 'bold', maxline: 2, align: TextAlign.center),
-                 SizedBox(height: 20.h,),
-                      IgnorePointer(
-                        child: CustomeButtomWithImageFit(
-                          height: 60.h,
-                          width: 300.w,
-                          image: "assets/change_hair_style/button.png",
-                          onTap: () {
-
-                          },
-                          isShowAd: false,
-                          child: Center(
-                            child: CustomText(text: AppLocalizations.of(context)?.tryNow ?? "Try Now", fontSize: 45, textColor: AppColors.buttonText, width: 250, maxline: 1, align: TextAlign.center),
+      child: CustomScrollView(
+        slivers: [
+          // ── Top banner – scrolls with the grid ──────────────────────────
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.only(left: 50.w, right: 50.w),
+              child: CustomeButtomWithImage(
+                height: 250.h,
+                width: double.infinity,
+                image: "assets/home/subprice.webp",
+                onTap: () {
+                  AdsSplashUtils.onShowAds(context, () {
+                    AppNavigation.NavigationPush(context, SubpriseScreen());
+                  });
+                },
+                isShowAd: true,
+                child: Row(
+                  children: [
+                    Spacer(),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CustomText(text: "AI Has a Surprise for You", fontSize: 40, textColor: AppColors.primaryText, width: 600, fontFamily: 'bold', maxline: 2, align: TextAlign.center),
+                        SizedBox(height: 20.h),
+                        IgnorePointer(
+                          child: CustomeButtomWithImageFit(
+                            height: 60.h,
+                            width: 300.w,
+                            image: "assets/change_hair_style/button.png",
+                            onTap: () {},
+                            isShowAd: false,
+                            child: Center(
+                              child: CustomText(text: AppLocalizations.of(context)?.tryNow ?? "Try Now", fontSize: 45, textColor: AppColors.buttonText, width: 250, maxline: 1, align: TextAlign.center),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-            Expanded(
-              child: GridView.builder(
-                primary: false,
-                padding: EdgeInsets.only(bottom: 200.h),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 15, mainAxisSpacing: 5, childAspectRatio: 0.9),
-                itemCount: tools.length,
-                itemBuilder: (context, index) {
-                  return _buildToolCard(tools[index]);
-                },
-              ),
-            ),
+          ),
 
-          ],
-        ),
+          SliverPadding(
+            padding: EdgeInsets.only(left: 50.w, right: 50.w, bottom: 250.h),
+            sliver: SliverGrid(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => _buildToolCard(tools[index]),
+                childCount: tools.length,
+              ),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 15,
+                mainAxisSpacing: 5,
+                childAspectRatio: 0.9,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -16,9 +16,6 @@ class AdsVariable {
 
   static String ca_rewardedAd = "11";
 
-  static String ca_facebookId = "11";
-  static String ca_facebookToken = "11";
-
   static String ca_nativeBgColor = "000000";
   static String ca_headlineTxtColor = "FFFFFF";
   static String ca_bodyTxtColor = "FFFFFF";

@@ -19,14 +19,14 @@ class LoadingScreen {
       context: Get.context!,
       builder: (BuildContext context) {
         return Material(
-          color: Colors.transparent,
+          color: Colors.black,
           child: PopScope(
             canPop: false,
             child: Container(
               height: Get.height,
               width: Get.height,
               padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 100.w),
-              decoration: BoxDecoration(color: Colors.black.withOpacity(0.8)),
+              decoration: BoxDecoration(color: Colors.black),
               child: Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

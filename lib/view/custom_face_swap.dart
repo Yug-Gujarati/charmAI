@@ -171,7 +171,10 @@ class _CustomFaceSwapState extends State<CustomFaceSwap> {
                           width: 950.w,
                           image: "assets/change_hair_style/button.png",
                           onTap: ()  {
-                            if(customFaceProvider.targetImage == null){
+                            if(customFaceProvider.isLoading){
+                              showToast("Image generation is in progress, please wait");
+                            }
+                            else if(customFaceProvider.targetImage == null){
                               showToast("Please select target image");
                             }
                             else if(imageProvider.selectedImage == null){

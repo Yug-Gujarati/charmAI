@@ -374,7 +374,7 @@ class _HairStyleChangerState extends State<HairStyleChanger> {
                               image: "assets/change_hair_style/button.png",
                               onTap: () {
                                 if(hairStyleProvider.isLoading){
-                                  showToast("Please wait we generating image");
+                                  showToast("Image generation is in progress, please wait");
                                 }
                                 else if (imageEditorProvider.selectedImage == null) {
                                   showToast("Please pick image of face");

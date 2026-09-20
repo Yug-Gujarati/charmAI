@@ -1,9 +1,10 @@
 // import 'package:agingwonder/model/language_model.dart';
 
+import 'dart:convert';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -21,6 +22,24 @@ showToast(msg) {
   Fluttertoast.showToast(
     msg: msg,
   );
+}
+
+/// Parses a human-readable error message from an ailabapi or Gemini API error response body.
+/// Priority: error_detail.message → error_msg → error.message → fallback
+String parseApiErrorMessage(String responseBody, {String fallback = 'Something went wrong, please try again.'}) {
+  try {
+    final data = jsonDecode(responseBody);
+    // ailabapi structured error: { error_detail: { message: "..." } }
+    final detailMsg = data['error_detail']?['message'];
+    if (detailMsg != null && detailMsg.toString().isNotEmpty) return detailMsg.toString();
+    // ailabapi top-level error_msg
+    final errorMsg = data['error_msg'];
+    if (errorMsg != null && errorMsg.toString().isNotEmpty) return errorMsg.toString();
+    // Gemini API error: { error: { message: "..." } }
+    final geminiMsg = data['error']?['message'];
+    if (geminiMsg != null && geminiMsg.toString().isNotEmpty) return geminiMsg.toString();
+  } catch (_) {}
+  return fallback;
 }
 
 showLog(String msg) {
